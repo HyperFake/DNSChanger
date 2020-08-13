@@ -13,9 +13,9 @@ namespace DNS_changer.ViewModels
 {
     public class MainViewModel : Screen
     {
+
         public MainViewModel()
         {
-
         }
 
         /// <summary>
@@ -98,6 +98,9 @@ namespace DNS_changer.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets Current DNS, Main and Alternative addresses
+        /// </summary>
         public void GetCurrentDNS()
         {
             NetworkInterface CurrentInterface = GetActiveEthernetOrWifiNetworkInterface();
@@ -110,6 +113,7 @@ namespace DNS_changer.ViewModels
             {
                 DNSstring.Append($"{info } ");
             }
+            
 
             CurrentDNS = DNSstring.ToString();
         }
