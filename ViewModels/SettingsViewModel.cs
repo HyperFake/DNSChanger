@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using DNS_changer.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,10 +12,12 @@ namespace DNS_changer.ViewModels
 {
     public class SettingsViewModel : Caliburn.Micro.Screen
     {
+        // System tray 
+        private TrayManager trayManager;
 
-
-        public SettingsViewModel()
+        public SettingsViewModel(TrayManager Manager)
         {
+            trayManager = Manager;
         }
 
       

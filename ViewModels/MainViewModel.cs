@@ -13,9 +13,14 @@ namespace DNS_changer.ViewModels
 {
     public class MainViewModel : Screen
     {
+        // System tray
+        private TrayManager trayManager;
 
-        public MainViewModel()
+        private bool isDNSChanged = false;
+        public MainViewModel(TrayManager Manager)
         {
+            trayManager = Manager;
+            CheckIfDNSChanged();
         }
 
         /// <summary>
@@ -24,6 +29,7 @@ namespace DNS_changer.ViewModels
         public void GoogleDNS()
         {
             SetDNS(DNSInformation.GoogleDNS);
+            CheckIfDNSChanged();
         }
 
         /// <summary>
@@ -32,6 +38,7 @@ namespace DNS_changer.ViewModels
         public void CloudflareDNS()
         {
             SetDNS(DNSInformation.CloudflareDNS);
+            CheckIfDNSChanged();
         }
 
         /// <summary>
@@ -40,6 +47,7 @@ namespace DNS_changer.ViewModels
         public void ResetDNS()
         {
             UnsetDNS();
+            CheckIfDNSChanged();
         }
 
 
@@ -101,21 +109,38 @@ namespace DNS_changer.ViewModels
         /// <summary>
         /// Gets Current DNS, Main and Alternative addresses
         /// </summary>
-        public void GetCurrentDNS()
+        public string GetCurrentDNS()
         {
             NetworkInterface CurrentInterface = GetActiveEthernetOrWifiNetworkInterface();
-            if (CurrentInterface == null) return;
+            if (CurrentInterface == null) return "";
 
             IPInterfaceProperties IPProperties = CurrentInterface.GetIPProperties();
             IPAddressCollection IPCollection = IPProperties.DnsAddresses;
+
             StringBuilder DNSstring = new StringBuilder();
             foreach(IPAddress info in IPCollection)
             {
                 DNSstring.Append($"{info } ");
             }
-            
-
             CurrentDNS = DNSstring.ToString();
+
+
+            return IPCollection[0].ToString();
+        }
+
+        private void CheckIfDNSChanged()
+        {
+            string currentDNS = GetCurrentDNS();
+            if (currentDNS == DNSInformation.GoogleDNS[0] || currentDNS == DNSInformation.CloudflareDNS[0])
+            {
+                isDNSChanged = true;
+                trayManager.Active();
+            }
+            else
+            {
+                isDNSChanged = false;
+                trayManager.NotActive();
+            }
         }
 
         /// <summary>
@@ -124,12 +149,12 @@ namespace DNS_changer.ViewModels
         /// <returns>Active Network</returns>
         private static NetworkInterface GetActiveEthernetOrWifiNetworkInterface()
         {
-            NetworkInterface Nic = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(
+            NetworkInterface currentNetwork = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(
                 a => a.OperationalStatus == OperationalStatus.Up &&
                 (a.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || a.NetworkInterfaceType == NetworkInterfaceType.Ethernet) &&
                 a.GetIPProperties().GatewayAddresses.Any(g => g.Address.AddressFamily.ToString() == "InterNetwork"));
 
-            return Nic;
+            return currentNetwork;
         }
 
         private string _currentDNS;

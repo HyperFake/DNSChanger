@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DNS_changer.Views"
         mc:Ignorable="d"
-        Closing="OnClosing"
+        xmlns:cal="http://www.caliburnproject.org"
+        cal:Message.Attach="[Event Closing] = [Action OnClose($eventArgs)]"
+        Visibility="{Binding Path=MainWindowVisibility, Mode=TwoWay}"
+        Title="DNS Changer" Height="450" Width="800">
         
-        Title="ShellView" Height="450" Width="800">
-
     <Grid>
         <!-- Definitions -->
         <Grid.ColumnDefinitions>

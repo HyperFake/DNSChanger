@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace DNS_changer.Models
 {
-    class TrayManager : Window, IDisposable, INotifyPropertyChanged
+    public class TrayManager : Window, IDisposable, INotifyPropertyChanged
     {
 
         private NotifyIcon _notifyIcon;
@@ -35,14 +35,11 @@ namespace DNS_changer.Models
 
         public TrayManager()
         {
-            if(NotifyIcon == null)
+            NotifyIcon = new NotifyIcon
             {
-                NotifyIcon = new NotifyIcon
-                {
-                    Icon = Properties.Resources.NotActiveKeksiukai,
-                    Visible = true
-                };
-            }
+                Icon = Properties.Resources.NotActiveKeksiukai,
+                Visible = true
+            };
 
         }
 
@@ -68,12 +65,11 @@ namespace DNS_changer.Models
 
         public void Active()
         {
-            if(NotifyIcon != null)
-            {
-                ContextMenuStrip menu = new ContextMenuStrip();
-                menu.Items.Add("Active", null, null);
-                _notifyIcon.ContextMenuStrip = menu;
-            }
+            ContextMenuStrip menu = new ContextMenuStrip();
+            menu.Items.Add("Active", null, null);
+            _notifyIcon.ContextMenuStrip = menu;
+
+            NotifyIcon.Icon = Properties.Resources.activeTortas;
         }
 
         public void NotActive()
@@ -81,6 +77,9 @@ namespace DNS_changer.Models
             ContextMenuStrip menu = new ContextMenuStrip();
             menu.Items.Add("NotActive", null, null);
             _notifyIcon.ContextMenuStrip = menu;
+
+            NotifyIcon.Icon = Properties.Resources.NotActiveKeksiukai;
+
         }
 
         public void Dispose()
