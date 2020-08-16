@@ -1,7 +1,9 @@
 ﻿using Caliburn.Micro;
+using DNS_changer.Models;
 using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace DNS_changer.ViewModels
 {
@@ -9,16 +11,31 @@ namespace DNS_changer.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public event EventHandler events;
+        public delegate void LoginEventHandler(object sender, EventArgs e);
+        public event LoginEventHandler OnLoginEvent;
 
         private void NotifyPropertyChanged(string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void Login()
+        public void LoginButton()
         {
-            
+            PasswordHashing hashing = new PasswordHashing();
+            string hashedPassword = hashing.HashPassword(PasswordInput);
+
+            if(hashing.ComparePasswords(hashedPassword, Properties.Settings.Default.Password))
+            {
+                if (OnLoginEvent == null) return;
+
+                EventArgs args = new EventArgs();
+                OnLoginEvent(this, args);
+            }
+            else
+            {
+                LoginErrorText = "Password is incorrect. Try again";
+                PasswordInput = "";
+            }
         }
 
         public LoginViewModel()
@@ -26,9 +43,9 @@ namespace DNS_changer.ViewModels
 
         }
 
-        public bool Success()
+        public void OnPasswordChanged(PasswordBox source)
         {
-            return true;
+            PasswordInput = source.Password;
         }
 
         public void Window()
@@ -44,6 +61,30 @@ namespace DNS_changer.ViewModels
             set
             {
                 _mainWindowVisibility = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private string _passwordInput;
+
+        public string PasswordInput
+        {
+            get { return _passwordInput; }
+            set
+            {
+                _passwordInput = value;
+                NotifyOfPropertyChange(() => PasswordInput);
+            }
+        }
+
+        private string _loginErrorText;
+
+        public string LoginErrorText
+        {
+            get { return _loginErrorText; }
+            set
+            {
+                _loginErrorText = value;
                 NotifyPropertyChanged();
             }
         }

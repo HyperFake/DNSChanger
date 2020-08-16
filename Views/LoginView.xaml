@@ -4,12 +4,42 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DNS_changer.Views"
+        xmlns:cal="http://www.caliburnproject.org"
         Visibility="{Binding Path=MainWindowVisibility, Mode=TwoWay}"
 
         mc:Ignorable="d"
         Title="LoginView" Height="450" Width="800">
     <Grid>
-        <Button x:Name="Login" Content="Button" HorizontalAlignment="Left" Margin="412,266,0,0" VerticalAlignment="Top" Width="75"/>
+        <!-- Definitions -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20*"/>
+            <!-- Main column -->
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <!-- Header text row -->
+            <RowDefinition Height="5*" MaxHeight="50px"/>
+            <!-- Input row-->
+            <RowDefinition Height="5*" MaxHeight="40px"/>
+            <!-- Error row-->
+            <RowDefinition Height="5*" MaxHeight="40px"/>
+            <!-- Button row -->
+            <RowDefinition Height="5*" MaxHeight="100"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="LoginHeaderText" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="2" TextWrapping="Wrap" Text="Please input your password" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="22"/>
+        <PasswordBox x:Name="LoginPasswordInput" Grid.Column="3" Grid.Row="3" cal:Message.Attach="[Event PasswordChanged] = [Action OnPasswordChanged($source)]" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Foreground="{Binding Path=LoginPasswordTextColor, Mode=OneWay}" />
+        <TextBlock x:Name="ErrorText" Text="{Binding Path=LoginErrorText, Mode=OneWay}" Grid.Column="3" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="Red"/>
+        <Button x:Name="LoginButton" Content="Login" Grid.Column="3" Grid.Row="5" FontSize="22"/>
+
 
     </Grid>
 </Window>

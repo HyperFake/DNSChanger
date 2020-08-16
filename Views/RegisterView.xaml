@@ -1,0 +1,51 @@
+﻿<Window x:Class="DNS_changer.Views.RegisterView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DNS_changer.Views"
+        mc:Ignorable="d"
+        xmlns:cal="http://www.caliburnproject.org"
+        Title="DNS Changer" Height="450" Width="800">
+
+    <Grid>
+        
+        <!-- Definitions -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="25*"/>
+            <!-- Main column -->
+            <ColumnDefinition Width="25*" MaxWidth="200px"/>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <!-- Header -->
+            <RowDefinition Height="6*" MaxHeight="100px"/>
+            <RowDefinition Height="20"/>
+            <!-- Password textbox -->
+            <RowDefinition Height="10*" MaxHeight="50px"/>
+            <RowDefinition Height="5"/>
+            <!-- Password Strength -->
+            <RowDefinition Height="10*" MaxHeight="25px"/>
+            <RowDefinition Height="20"/>
+            <!-- Register button -->
+            <RowDefinition Height="10*" MaxHeight="80px"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <!-- Content -->
+        <TextBlock x:Name="registerHeader" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="Please enter your password." TextWrapping="Wrap" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="2" FontSize="22"/>
+        <PasswordBox cal:Message.Attach="[Event PasswordChanged] = [Action OnPasswordChanged($source)]" x:Name="PasswordInput" Grid.Column="3" Grid.Row="4" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="16"/>
+        <ProgressBar x:Name="registerStrengthBar" Grid.Column="3" Grid.Row="6" Minimum="0" Maximum="100" Value="{Binding Path=PasswordStrengthValue, Mode=OneWay}" Foreground="{Binding Path=RegisterStrengthBarColor, Mode=OneWay}"/>
+        <TextBlock x:Name="registerStrengthHeader" HorizontalAlignment="Left" Grid.Column="3" Grid.Row="6" VerticalAlignment="Center" Text="{Binding Path=PasswordStrengthText, Mode=OneWay}" Foreground="{Binding Path=RegisterStrengthBarTextColor, Mode=OneWay}" TextWrapping="Wrap" FontSize="16"/>
+
+        <Button x:Name="RegisterButton" Content="Register" Grid.Column="3" Grid.Row="8" FontSize="18" IsEnabled="{Binding Path=RegisterButtonEnabled, Mode=OneWay}"/>
+
+    </Grid>
+</Window>

@@ -30,18 +30,58 @@ namespace DNS_changer
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            //    DisplayRootViewFor<ShellViewModel>();
-
             IWindowManager windowManager = IoC.Get<IWindowManager>();
 
-            LoginViewModel loginViewModel = IoC.Get<LoginViewModel>();
-            windowManager.ShowDialog(loginViewModel, null, null);
-
-
+            if (string.IsNullOrWhiteSpace(Properties.Settings.Default.Password))
+            {
+                RegisterViewModel registerViewModel = IoC.Get<RegisterViewModel>();
+                registerViewModel.OnRegisterEvent += (o, s) =>
+                {
+                    RegisterSuccess(registerViewModel);
+                };
+                // Show the login view
+                windowManager.ShowDialog(registerViewModel, null, null);
+            }
+            else
+            {
+                LoginViewModel loginViewModel = IoC.Get<LoginViewModel>();
+                // Subscribe new event to change view on successful login
+                loginViewModel.OnLoginEvent += (o, s) =>
+                {
+                    LoginSuccess(loginViewModel);
+                };
+                // Show the login view
+                windowManager.ShowDialog(loginViewModel, null, null);
+            }
         }
-        private void ChangeView(object sender, EventArgs e)
+
+        // Terminates login screen and shows Shell
+        private void LoginSuccess(LoginViewModel loginViewModel)
         {
-            
+            IWindowManager windowManager = IoC.Get<IWindowManager>();
+            ShellViewModel shellViewModel = IoC.Get<ShellViewModel>();
+
+            Application.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+            loginViewModel.TryClose();
+
+            Application.ShutdownMode = ShutdownMode.OnLastWindowClose;
+
+            windowManager.ShowDialog(shellViewModel, null, null);
         }
+        private void RegisterSuccess(RegisterViewModel registerViewModel)
+        {
+            IWindowManager windowManager = IoC.Get<IWindowManager>();
+            ShellViewModel shellViewModel = IoC.Get<ShellViewModel>();
+
+            Application.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+            registerViewModel.TryClose();
+
+            Application.ShutdownMode = ShutdownMode.OnLastWindowClose;
+
+            windowManager.ShowDialog(shellViewModel, null, null);
+        }
+
     }
 }

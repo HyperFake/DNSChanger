@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 
@@ -37,7 +32,7 @@ namespace DNS_changer.Models
         {
             NotifyIcon = new NotifyIcon
             {
-                Icon = Properties.Resources.NotActiveKeksiukai,
+                Icon = Properties.Resources.off,
                 Visible = true
             };
 
@@ -69,7 +64,7 @@ namespace DNS_changer.Models
             menu.Items.Add("Active", null, null);
             _notifyIcon.ContextMenuStrip = menu;
 
-            NotifyIcon.Icon = Properties.Resources.activeTortas;
+            NotifyIcon.Icon = Properties.Resources.off;
         }
 
         public void NotActive()
@@ -78,7 +73,7 @@ namespace DNS_changer.Models
             menu.Items.Add("NotActive", null, null);
             _notifyIcon.ContextMenuStrip = menu;
 
-            NotifyIcon.Icon = Properties.Resources.NotActiveKeksiukai;
+            NotifyIcon.Icon = Properties.Resources.on;
 
         }
 
