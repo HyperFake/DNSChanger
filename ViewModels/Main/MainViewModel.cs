@@ -1,12 +1,12 @@
 ﻿using Caliburn.Micro;
-using DNS_changer.Models;
+using DNS_changer.Helper;
 using System.Linq;
 using System.Management;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Net;
 
-namespace DNS_changer.ViewModels
+namespace DNS_changer.ViewModels.Main
 {
     public class MainViewModel : Screen
     {

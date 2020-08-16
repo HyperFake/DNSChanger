@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace DNS_changer.Views
+namespace DNS_changer.Views.Login
 {
     /// <summary>
     /// Interaction logic for LoginView.xaml

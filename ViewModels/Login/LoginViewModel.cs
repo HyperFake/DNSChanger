@@ -1,11 +1,11 @@
 ﻿using Caliburn.Micro;
-using DNS_changer.Models;
+using DNS_changer.Helper;
 using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace DNS_changer.ViewModels
+namespace DNS_changer.ViewModels.Login
 {
     class LoginViewModel : Screen, INotifyPropertyChanged
     {
@@ -21,10 +21,9 @@ namespace DNS_changer.ViewModels
 
         public void LoginButton()
         {
-            PasswordHashing hashing = new PasswordHashing();
-            string hashedPassword = hashing.HashPassword(PasswordInput);
+            PasswordHelper hashing = new PasswordHelper();
 
-            if(hashing.ComparePasswords(hashedPassword, Properties.Settings.Default.Password))
+            if (hashing.ComparePasswordToStored(PasswordInput))
             {
                 if (OnLoginEvent == null) return;
 
@@ -34,7 +33,6 @@ namespace DNS_changer.ViewModels
             else
             {
                 LoginErrorText = "Password is incorrect. Try again";
-                PasswordInput = "";
             }
         }
 
@@ -73,7 +71,7 @@ namespace DNS_changer.ViewModels
             set
             {
                 _passwordInput = value;
-                NotifyOfPropertyChange(() => PasswordInput);
+                NotifyPropertyChanged();
             }
         }
 

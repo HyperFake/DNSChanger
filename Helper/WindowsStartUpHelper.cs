@@ -2,16 +2,16 @@
 using System;
 using System.Windows.Forms;
 
-namespace DNS_changer.Models
+namespace DNS_changer.Helper
 {
-    class WindowsStartUp
+    class WindowsStartUpHelper
     {
         bool StartAtStartUp = false;
 
         // The path to the key where Windows looks for startup applications
         private readonly RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
-        public WindowsStartUp()
+        public WindowsStartUpHelper()
         {
 
         }

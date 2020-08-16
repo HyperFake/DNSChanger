@@ -1,11 +1,13 @@
 ﻿using Caliburn.Micro;
-using DNS_changer.Models;
+using DNS_changer.Helper;
+using DNS_changer.ViewModels.Main;
+using DNS_changer.ViewModels.Settings;
 using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Forms;
 
-namespace DNS_changer.ViewModels
+namespace DNS_changer.ViewModels.Shell
 {
     public class ShellViewModel : Conductor<object>
     {

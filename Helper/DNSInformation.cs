@@ -1,4 +1,4 @@
-﻿namespace DNS_changer.Models
+﻿namespace DNS_changer.Helper
 {
     public static class DNSInformation
     {

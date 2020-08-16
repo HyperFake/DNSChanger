@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DNS_changer.Views
+namespace DNS_changer.Views.Settings
 {
     /// <summary>
-    /// Interaction logic for MainView.xaml
+    /// Interaction logic for SettingsView.xaml
     /// </summary>
-    public partial class MainView : UserControl
+    public partial class SettingsView : UserControl
     {
-        public MainView()
+        public SettingsView()
         {
             InitializeComponent();
         }

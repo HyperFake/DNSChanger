@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 
-namespace DNS_changer.Models
+namespace DNS_changer.Helper
 {
-    public class PasswordHashing
+    public class PasswordHelper
     {
         public string HashPassword(string password)
         {
@@ -25,6 +25,14 @@ namespace DNS_changer.Models
             else
                 return false;
 
+        }
+
+        public bool ComparePasswordToStored(string newPassword)
+        {
+            if (HashPassword(newPassword).Equals(Properties.Settings.Default.Password))
+                return true;
+            else
+                return false;
         }
     }
 

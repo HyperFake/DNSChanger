@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DNS_changer.Views
+namespace DNS_changer.Views.Register
 {
     /// <summary>
-    /// Interaction logic for SettingsView.xaml
+    /// Interaction logic for RegisterView.xaml
     /// </summary>
-    public partial class SettingsView : UserControl
+    public partial class RegisterView : Window
     {
-        public SettingsView()
+        public RegisterView()
         {
             InitializeComponent();
         }

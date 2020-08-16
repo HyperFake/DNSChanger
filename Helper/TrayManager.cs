@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Forms;
 
 
-namespace DNS_changer.Models
+namespace DNS_changer.Helper
 {
     public class TrayManager : Window, IDisposable, INotifyPropertyChanged
     {

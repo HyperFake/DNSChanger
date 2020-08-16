@@ -1,14 +1,10 @@
 ﻿using Caliburn.Micro;
-using DNS_changer.Models;
-using DNS_changer.ViewModels;
-using DNS_changer.Views;
+using DNS_changer.ViewModels.Login;
+using DNS_changer.ViewModels.Register;
+using DNS_changer.ViewModels.Shell;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace DNS_changer

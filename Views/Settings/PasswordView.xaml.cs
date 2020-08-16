@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DNS_changer.Views
+namespace DNS_changer.Views.Settings
 {
     /// <summary>
-    /// Interaction logic for RegisterView.xaml
+    /// Interaction logic for PasswordView.xaml
     /// </summary>
-    public partial class RegisterView : Window
+    public partial class PasswordView : UserControl
     {
-        public RegisterView()
+        public PasswordView()
         {
             InitializeComponent();
         }

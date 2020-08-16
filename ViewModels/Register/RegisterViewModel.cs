@@ -1,5 +1,5 @@
 ﻿using Caliburn.Micro;
-using DNS_changer.Models;
+using DNS_changer.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace DNS_changer.ViewModels
+namespace DNS_changer.ViewModels.Register
 {
     class RegisterViewModel : Screen
     {
@@ -18,14 +18,14 @@ namespace DNS_changer.ViewModels
         public RegisterViewModel()
         {
             // Set default parameters
-            PasswordDifficultyDefaultLook();
+            DefaultLook();
         }
 
         public void RegisterButton()
         {
             if(ParsePasswordInput(PasswordInput))
             {
-                string hashedPassword = new PasswordHashing().HashPassword(PasswordInput); 
+                string hashedPassword = new PasswordHelper().HashPassword(PasswordInput); 
                 // Set the password
                 Properties.Settings.Default.Password = hashedPassword;
                 Properties.Settings.Default.Save();
@@ -43,8 +43,8 @@ namespace DNS_changer.ViewModels
             // If empty set default look
             if(string.IsNullOrWhiteSpace(password))
             {
-                PasswordDifficultyDefaultLook();
-                RegisterButtonEnabled = false;
+                DefaultLook();
+                ButtonEnabled = false;
                 return false;
             }
 
@@ -54,20 +54,20 @@ namespace DNS_changer.ViewModels
             // Password must be atleast 3 symbols
             if (password.Length <= 3)
             {
-                SetPasswordLook("Too short", passwordValue, Brushes.Red, Brushes.Black);
-                RegisterButtonEnabled = false;
+                ChangeLook("Too short", passwordValue, Brushes.Red, Brushes.Black);
+                ButtonEnabled = false;
                 return false;
             }
             // Password must be less than 18 symbols
             if (password.Length >= 20)
             {
-                SetPasswordLook("Too long", passwordValue, Brushes.Red, Brushes.Black);
-                RegisterButtonEnabled = false;
+                ChangeLook("Too long", passwordValue, Brushes.Red, Brushes.Black);
+                ButtonEnabled = false;
                 return false;
             }
 
             // Enable register button as it meets standarts
-            RegisterButtonEnabled = true;
+            ButtonEnabled = true;
 
 
             // Calculate additional password strength
@@ -79,22 +79,22 @@ namespace DNS_changer.ViewModels
             // Weak password
             if(passwordValue <= 30)
             {
-                SetPasswordLook("Weak", passwordValue, Brushes.Red, Brushes.Black);
+                ChangeLook("Weak", passwordValue, Brushes.Red, Brushes.Black);
                 return true;
             }
             else if(passwordValue > 30 && passwordValue <= 60)
             {
-                SetPasswordLook("Medium", passwordValue, Brushes.Yellow, Brushes.Black);
+                ChangeLook("Medium", passwordValue, Brushes.Yellow, Brushes.Black);
                 return true;
             }
             else if(passwordValue > 60 && passwordValue <= 85)
             {
-                SetPasswordLook("Good", passwordValue, Brushes.LightGreen, Brushes.Black);
+                ChangeLook("Good", passwordValue, Brushes.LightGreen, Brushes.Black);
                 return true;
             }
             else if (passwordValue > 85)
             {
-                SetPasswordLook("Very Good", passwordValue, Brushes.Green, Brushes.Black);
+                ChangeLook("Very Good", passwordValue, Brushes.Green, Brushes.Black);
                 return true;
             }
 
@@ -102,12 +102,12 @@ namespace DNS_changer.ViewModels
         }
 
 
-        private void SetPasswordLook(string HeaderText, int barValue, Brush barColor, Brush barTextColor)
+        private void ChangeLook(string HeaderText, int barValue, Brush barColor, Brush barTextColor)
         {
-            PasswordStrengthText = HeaderText;
-            PasswordStrengthValue = barValue;
-            RegisterStrengthBarColor = barColor;
-            RegisterStrengthBarTextColor = barTextColor;
+            BarText = HeaderText;
+            BarValue = barValue;
+            BarColor = barColor;
+            BarTextColor = barTextColor;
         }
 
         public void OnPasswordChanged(PasswordBox source)
@@ -115,9 +115,9 @@ namespace DNS_changer.ViewModels
             PasswordInput = source.Password;
         }
 
-        private void PasswordDifficultyDefaultLook()
+        private void DefaultLook()
         {
-            SetPasswordLook("Input Password", 5, Brushes.LightGray, Brushes.Gray);
+            ChangeLook("Input Password", 5, Brushes.LightGray, Brushes.Gray);
         }
 
         private string _password;
@@ -133,63 +133,63 @@ namespace DNS_changer.ViewModels
             }
         }
 
-        private string _passwordStrengthText;
+        private string _barText;
 
-        public string PasswordStrengthText
+        public string BarText
         {
-            get { return _passwordStrengthText; }
+            get { return _barText; }
             set
             {
-                _passwordStrengthText = value;
-                NotifyOfPropertyChange(() => PasswordStrengthText);
+                _barText = value;
+                NotifyOfPropertyChange(() => BarText);
             }
         }
 
-        private int _passwordStrengthValue;
+        private int _barValue;
 
-        public int PasswordStrengthValue
+        public int BarValue
         {
-            get { return _passwordStrengthValue; }
+            get { return _barValue; }
             set
             {
-                _passwordStrengthValue = value;
-                NotifyOfPropertyChange(() => PasswordStrengthValue);
+                _barValue = value;
+                NotifyOfPropertyChange(() => BarValue);
             }
         }
 
-        private Brush _registerStrengthBarColor;
+        private Brush _barColor;
 
-        public Brush RegisterStrengthBarColor
+        public Brush BarColor
         {
-            get { return _registerStrengthBarColor; }
+            get { return _barColor; }
             set
             {
-                _registerStrengthBarColor = value;
-                NotifyOfPropertyChange(() => RegisterStrengthBarColor);
+                _barColor = value;
+                NotifyOfPropertyChange(() => BarColor);
             }
         }
 
-        private Brush _registerStrengthBarTextColor;
+        private Brush _barTextColor;
 
-        public Brush RegisterStrengthBarTextColor
+        public Brush BarTextColor
         {
-            get { return _registerStrengthBarTextColor; }
+            get { return _barTextColor; }
             set
             {
-                _registerStrengthBarTextColor = value;
-                NotifyOfPropertyChange(() => RegisterStrengthBarTextColor);
+                _barTextColor = value;
+                NotifyOfPropertyChange(() => BarTextColor);
 
             }
         }
 
-        private bool _registerButtonEnabled;
-        public bool RegisterButtonEnabled
+        private bool _buttonEnabled;
+        public bool ButtonEnabled
         {
-            get { return _registerButtonEnabled; }
+            get { return _buttonEnabled; }
             set
             {
-                _registerButtonEnabled = value;
-                NotifyOfPropertyChange(() => RegisterButtonEnabled);
+                _buttonEnabled = value;
+                NotifyOfPropertyChange(() => ButtonEnabled);
             }
         }
     }
