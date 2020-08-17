@@ -22,7 +22,13 @@ namespace DNS_changer.ViewModels.Shell
         {
             // On startup load main view
             ActivateItem(mainView);
-            AttachEventOnDoubleClickIcon();
+
+            // System Tray functions
+            AttachShowWindow();
+            AddMainWindowButton();
+            settingsView.AddWindowsStartButton();
+
+            AddExitAppButton();
         }
 
         /// <summary>
@@ -59,6 +65,16 @@ namespace DNS_changer.ViewModels.Shell
         }
 
         /// <summary>
+        /// Exit app function for system tray
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">EventArgs</param>
+        private void ExitAppSystemTray(object sender, EventArgs e)
+        {
+            ExitApp();
+        }
+
+        /// <summary>
         /// Overrides OnClose to just hide
         /// </summary>
         /// <param name="e">e</param>
@@ -68,13 +84,25 @@ namespace DNS_changer.ViewModels.Shell
             e.Cancel = true;
         }
 
+        private void AddExitAppButton()
+        {
+            trayManager.AddItemToContextStripMenu("Exit", null, ExitAppSystemTray);
+        }
+
+        /// <summary>
+        /// Adds Main window button to ContextStripMenu
+        /// </summary>
+        private void AddMainWindowButton()
+        {
+            trayManager.AddItemToContextStripMenu("DNS Changer", null, ShowMainWindow);
+        }
+
         /// <summary>
         /// Attaches function to show Main window on doubleclick
         /// </summary>
-        public void AttachEventOnDoubleClickIcon()
+        private void AttachShowWindow()
         {
-            NotifyIcon icon = trayManager.NotifyIcon;
-            icon.DoubleClick += ShowMainWindow;
+            trayManager.NotifyIcon.DoubleClick += ShowMainWindow;
         }
 
         /// <summary>

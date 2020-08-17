@@ -1,29 +1,25 @@
 ﻿using Caliburn.Micro;
 using DNS_changer.Helper;
 using System;
-using System.ComponentModel;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace DNS_changer.ViewModels.Login
 {
-    class LoginViewModel : Screen, INotifyPropertyChanged
+    class LoginViewModel : Screen
     {
-        public event PropertyChangedEventHandler PropertyChanged;
 
+        // For closing screen upon succesful login
         public delegate void LoginEventHandler(object sender, EventArgs e);
         public event LoginEventHandler OnLoginEvent;
 
-        private void NotifyPropertyChanged(string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
+        /// <summary>
+        /// Login button function, compares passwords and activates login event if success
+        /// </summary>
         public void LoginButton()
         {
-            PasswordHelper hashing = new PasswordHelper();
+            PasswordHelper passwordHelper = new PasswordHelper();
 
-            if (hashing.ComparePasswordToStored(PasswordInput))
+            if (passwordHelper.ComparePasswordToStored(PasswordInput))
             {
                 if (OnLoginEvent == null) return;
 
@@ -36,31 +32,13 @@ namespace DNS_changer.ViewModels.Login
             }
         }
 
-        public LoginViewModel()
-        {
-
-        }
-
+        /// <summary>
+        /// On password input changed, update PasswordInput string
+        /// </summary>
+        /// <param name="source">PasswordBox</param>
         public void OnPasswordChanged(PasswordBox source)
         {
             PasswordInput = source.Password;
-        }
-
-        public void Window()
-        {
-            MainWindowVisibility = Visibility.Collapsed;
-        }
-
-        private Visibility _mainWindowVisibility;
-
-        public Visibility MainWindowVisibility
-        {
-            get { return _mainWindowVisibility; }
-            set
-            {
-                _mainWindowVisibility = value;
-                NotifyPropertyChanged();
-            }
         }
 
         private string _passwordInput;
@@ -71,7 +49,7 @@ namespace DNS_changer.ViewModels.Login
             set
             {
                 _passwordInput = value;
-                NotifyPropertyChanged();
+                NotifyOfPropertyChange(() => PasswordInput);
             }
         }
 
@@ -83,7 +61,7 @@ namespace DNS_changer.ViewModels.Login
             set
             {
                 _loginErrorText = value;
-                NotifyPropertyChanged();
+                NotifyOfPropertyChange(() => LoginErrorText);
             }
         }
     }

@@ -1,10 +1,6 @@
 ﻿using Caliburn.Micro;
 using DNS_changer.Helper;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -15,11 +11,10 @@ namespace DNS_changer.ViewModels.Settings
         // For password comparing & hashing
         PasswordHelper passwordHelper = new PasswordHelper();
 
-        public PasswordViewModel()
-        {
 
-        }
-
+        /// <summary>
+        /// Changes password if parameters meet
+        /// </summary>
         public void ChangePassword()
         {
             if(ParsePasswordInput(NewPassword) && PasswordsComparing())
@@ -28,6 +23,12 @@ namespace DNS_changer.ViewModels.Settings
                 Properties.Settings.Default.Save();
             }
         }
+
+        /// <summary>
+        /// Parses password input and represents it's strength accordingly
+        /// </summary>
+        /// <param name="password">Password user give</param>
+        /// <returns>true if user's given password is good. False otherwise</returns>
         private bool ParsePasswordInput(string password)
         {
             // If empty set default look
@@ -91,11 +92,21 @@ namespace DNS_changer.ViewModels.Settings
             return false;
         }
 
+        /// <summary>
+        /// Default look for password strength bar
+        /// </summary>
         private void DefaultLook()
         {
             ChangeLook("Input Password", 5, Brushes.LightGray, Brushes.Gray);
         }
 
+        /// <summary>
+        /// Changes password strength bar look
+        /// </summary>
+        /// <param name="HeaderText">Bar text</param>
+        /// <param name="barValue">Bar value</param>
+        /// <param name="barColor">Bar color</param>
+        /// <param name="barTextColor">Bar text color</param>
         private void ChangeLook(string HeaderText, int barValue, Brush barColor, Brush barTextColor)
         {
             BarText = HeaderText;
@@ -104,6 +115,10 @@ namespace DNS_changer.ViewModels.Settings
             BarTextColor = barTextColor;
         }
 
+        /// <summary>
+        /// Compares Old password input to Stored password, New password to Repeat password and New password to Stored password
+        /// </summary>
+        /// <returns></returns>
         private bool PasswordsComparing()
         {
             if(!passwordHelper.ComparePasswordToStored(OldPassword))
@@ -126,16 +141,28 @@ namespace DNS_changer.ViewModels.Settings
             return true;
         }
 
+        /// <summary>
+        /// On old password input changed, updates OldPassword string
+        /// </summary>
+        /// <param name="source">PasswordBox</param>
         public void OnOldPasswordChanged(PasswordBox source)
         {
             OldPassword = source.Password;
         }
 
+        /// <summary>
+        /// On new password input changed, updates NewPassword string
+        /// </summary>
+        /// <param name="source">PasswordBox</param>
         public void OnNewPasswordChanged(PasswordBox source)
         {
             NewPassword = source.Password;
         }
 
+        /// <summary>
+        /// On repeat password input changed, updates RepeatPassword string
+        /// </summary>
+        /// <param name="source">PasswordBox</param>
         public void OnRepeatPasswordChanged(PasswordBox source)
         {
             RepeatPassword = source.Password;
@@ -187,7 +214,6 @@ namespace DNS_changer.ViewModels.Settings
         }
 
         private Brush _barTextColor;
-
         public Brush BarTextColor
         {
             get { return _barTextColor; }
@@ -210,7 +236,6 @@ namespace DNS_changer.ViewModels.Settings
         }
 
         private Brush _barColor;
-
         public Brush BarColor
         {
             get { return _barColor; }
@@ -221,8 +246,8 @@ namespace DNS_changer.ViewModels.Settings
             }
         }
 
+        // For enabling or disabling button
         private bool _buttonEnabled;
-
         public bool ButtonEnabled
         {
             get { return _buttonEnabled; }

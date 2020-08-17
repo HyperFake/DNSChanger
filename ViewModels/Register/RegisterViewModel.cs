@@ -1,10 +1,7 @@
 ﻿using Caliburn.Micro;
 using DNS_changer.Helper;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -12,6 +9,7 @@ namespace DNS_changer.ViewModels.Register
 {
     class RegisterViewModel : Screen
     {
+        // Event for changing screen upon successful register
         public delegate void RegisterEventHandler(object sender, EventArgs e);
         public event RegisterEventHandler OnRegisterEvent;
 
@@ -21,6 +19,9 @@ namespace DNS_changer.ViewModels.Register
             DefaultLook();
         }
 
+        /// <summary>
+        /// Checks password input and stores it if met parameters
+        /// </summary>
         public void RegisterButton()
         {
             if(ParsePasswordInput(PasswordInput))
@@ -38,6 +39,11 @@ namespace DNS_changer.ViewModels.Register
             }
         }
 
+        /// <summary>
+        /// Parses user password input
+        /// </summary>
+        /// <param name="password">Password string</param>
+        /// <returns>true if it meets parameters. False otherwise</returns>
         private bool ParsePasswordInput(string password)
         {
             // If empty set default look
@@ -102,19 +108,33 @@ namespace DNS_changer.ViewModels.Register
         }
 
 
-        private void ChangeLook(string HeaderText, int barValue, Brush barColor, Brush barTextColor)
+        /// <summary>
+        /// Changes bar look
+        /// </summary>
+        /// <param name="barText">Bar text</param>
+        /// <param name="barValue">Bar value</param>
+        /// <param name="barColor">Bar color</param>
+        /// <param name="barTextColor">Bar text color</param>
+        private void ChangeLook(string barText, int barValue, Brush barColor, Brush barTextColor)
         {
-            BarText = HeaderText;
+            BarText = barText;
             BarValue = barValue;
             BarColor = barColor;
             BarTextColor = barTextColor;
         }
 
+        /// <summary>
+        /// On password input changed, update PasswordInput string
+        /// </summary>
+        /// <param name="source">PasswordBox</param>
         public void OnPasswordChanged(PasswordBox source)
         {
             PasswordInput = source.Password;
         }
 
+        /// <summary>
+        /// Bar default look
+        /// </summary>
         private void DefaultLook()
         {
             ChangeLook("Input Password", 5, Brushes.LightGray, Brushes.Gray);
@@ -182,6 +202,7 @@ namespace DNS_changer.ViewModels.Register
             }
         }
 
+        // Disable or enable button
         private bool _buttonEnabled;
         public bool ButtonEnabled
         {

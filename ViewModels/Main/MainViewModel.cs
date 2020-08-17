@@ -13,7 +13,6 @@ namespace DNS_changer.ViewModels.Main
         // System tray
         private TrayManager trayManager;
 
-        private bool isDNSChanged = false;
         public MainViewModel(TrayManager Manager)
         {
             trayManager = Manager;
@@ -125,18 +124,19 @@ namespace DNS_changer.ViewModels.Main
             return IPCollection[0].ToString();
         }
 
+        /// <summary>
+        /// Checks if DNS is changed and change System tray icon accordingly
+        /// </summary>
         private void CheckIfDNSChanged()
         {
             string currentDNS = GetCurrentDNS();
             if (currentDNS == DNSInformation.GoogleDNS[0] || currentDNS == DNSInformation.CloudflareDNS[0])
             {
-                isDNSChanged = true;
-                trayManager.Active();
+                trayManager.ActivateTray();
             }
             else
             {
-                isDNSChanged = false;
-                trayManager.NotActive();
+                trayManager.DeactivateTray();
             }
         }
 
@@ -155,7 +155,6 @@ namespace DNS_changer.ViewModels.Main
         }
 
         private string _currentDNS;
-
         public string CurrentDNS
         {
             get

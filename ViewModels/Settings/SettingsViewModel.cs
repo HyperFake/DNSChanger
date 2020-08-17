@@ -5,24 +5,35 @@ namespace DNS_changer.ViewModels.Settings
 {
     public class SettingsViewModel : Conductor<object>
     {
-        // System tray 
-        private TrayManager trayManager;
-
         // Setting view models
         GeneralViewModel generalView = new GeneralViewModel();
         PasswordViewModel passwordView = new PasswordViewModel();
 
         public SettingsViewModel(TrayManager Manager)
         {
-            trayManager = Manager;
+            // Send tray system to subview
+            generalView.TrayManager = Manager;
+
+            // Activate subview
             GeneralSettings();
         }
 
+        public void AddWindowsStartButton()
+        {
+            generalView.AddToggleWindowsStartToTray();
+        }
+
+        /// <summary>
+        /// Activates GeneralView screen
+        /// </summary>
         public void GeneralSettings()
         {
             ActivateItem(generalView);
         }
 
+        /// <summary>
+        /// Activates PasswordView screen
+        /// </summary>
         public void PasswordSettings()
         {
             ActivateItem(passwordView);

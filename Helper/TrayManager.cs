@@ -9,23 +9,11 @@ namespace DNS_changer.Helper
     public class TrayManager : Window, IDisposable, INotifyPropertyChanged
     {
 
-        private NotifyIcon _notifyIcon;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged(string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public NotifyIcon NotifyIcon
-        {
-            get { return _notifyIcon; }
-            set
-            {
-                _notifyIcon = value;
-                NotifyPropertyChanged();
-            }
         }
 
         public TrayManager()
@@ -35,7 +23,21 @@ namespace DNS_changer.Helper
                 Icon = Properties.Resources.off,
                 Visible = true
             };
+        }
 
+        public void AddItemToContextStripMenu(string name, System.Drawing.Image Image, EventHandler Event)
+        {
+            if(NotifyIcon.ContextMenuStrip == null)
+            {
+                // As this is first item, we have to create menu to hold it
+                ContextMenuStrip newMenu = new ContextMenuStrip();
+                // Make items checked status visible
+                newMenu.ShowCheckMargin = true;
+
+                NotifyIcon.ContextMenuStrip = newMenu;
+            }
+
+            NotifyIcon.ContextMenuStrip.Items.Add(name, Image, Event);
         }
 
         public void SetToolTipText(string text)
@@ -58,32 +60,40 @@ namespace DNS_changer.Helper
             _notifyIcon.Visible = true;
         }
 
-        public void Active()
+        public ContextMenuStrip GetCurrentContextMenuStrip()
         {
-            ContextMenuStrip menu = new ContextMenuStrip();
-            menu.Items.Add("Active", null, null);
-            _notifyIcon.ContextMenuStrip = menu;
+            return NotifyIcon.ContextMenuStrip;
+        }
 
+        public void ActivateTray()
+        {
             NotifyIcon.Icon = Properties.Resources.off;
         }
 
-        public void NotActive()
+        public void DeactivateTray()
         {
-            ContextMenuStrip menu = new ContextMenuStrip();
-            menu.Items.Add("NotActive", null, null);
-            _notifyIcon.ContextMenuStrip = menu;
-
             NotifyIcon.Icon = Properties.Resources.on;
-
         }
 
         public void Dispose()
         {
             Dispose(true);
         }
+
         ~TrayManager()
         {
             Dispose(false);
+        }
+
+        private NotifyIcon _notifyIcon;
+        public NotifyIcon NotifyIcon
+        {
+            get { return _notifyIcon; }
+            set
+            {
+                _notifyIcon = value;
+                NotifyPropertyChanged();
+            }
         }
     }
 }
