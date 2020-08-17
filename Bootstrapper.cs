@@ -1,9 +1,11 @@
 ﻿using Caliburn.Micro;
+using DNS_changer.Helper;
 using DNS_changer.ViewModels.Login;
 using DNS_changer.ViewModels.Register;
 using DNS_changer.ViewModels.Shell;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 
@@ -11,7 +13,9 @@ namespace DNS_changer
 {
     public class Bootstrapper : BootstrapperBase
     {
-        
+        // Set saved language before any view appears
+        LanguageHelper lgHelper = new LanguageHelper();
+
         public Bootstrapper()
         {
             // Gets current process name
@@ -21,7 +25,20 @@ namespace DNS_changer
             if (Process.GetProcesses().Count(p => p.ProcessName == DNSChangerName) > 1)
                 return;
 
+            SetDefaultLanguage();
             Initialize();
+        }
+
+        private void SetDefaultLanguage()
+        {
+            if(string.IsNullOrWhiteSpace(Properties.Settings.Default.Language))
+            {
+                Properties.Settings.Default.Language = "en-US";
+                Properties.Settings.Default.Save();
+                return;
+            }
+
+            lgHelper.SetLanguage(Properties.Settings.Default.Language);
         }
 
         /// <summary>

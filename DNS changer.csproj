@@ -78,9 +78,22 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helper\DNSInformation.cs" />
+    <Compile Include="Helper\LanguageHelper.cs" />
+    <Compile Include="Helper\LocalizationExtension.cs" />
     <Compile Include="Helper\PasswordHelper.cs" />
+    <Compile Include="Helper\TranslationSource.cs" />
     <Compile Include="Helper\TrayManager.cs" />
     <Compile Include="Helper\WindowsStartUpHelper.cs" />
+    <Compile Include="Properties\Resources.lt-LT.Designer.cs">
+      <DependentUpon>Resources.lt-LT.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\Resources.en-US.Designer.cs">
+      <DependentUpon>Resources.en-US.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="ViewModels\Login\LoginViewModel.cs" />
     <Compile Include="ViewModels\Main\MainViewModel.cs" />
@@ -126,8 +139,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <EmbeddedResource Include="Properties\Resources.lt-LT.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.lt-LT.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.en-US.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.en-US.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -172,9 +195,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\TrayIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

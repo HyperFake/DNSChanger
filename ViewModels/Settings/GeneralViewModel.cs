@@ -1,5 +1,6 @@
 ﻿using DNS_changer.Helper;
 using System;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace DNS_changer.ViewModels.Settings
@@ -8,6 +9,8 @@ namespace DNS_changer.ViewModels.Settings
     {
         // Start up helper
         WindowsStartUpHelper startUpHelper = new WindowsStartUpHelper();
+        // Language helper
+        LanguageHelper lgHelper = new LanguageHelper();
 
         // Start Up item
         ToolStripMenuItem WindowsStartUp = new ToolStripMenuItem();
@@ -20,13 +23,34 @@ namespace DNS_changer.ViewModels.Settings
             StartUpEnabled = startUpHelper.CheckRegistryState();
         }
 
+        public void AddChangeLanguageToTray()
+        {
+            ToolStripMenuItem ChangeLanguage = new ToolStripMenuItem();
+            ChangeLanguage.DropDownItems.Add(lgHelper.ReturnValue("LanguageEnglishButton"), null, AddEnglishSystemTray);
+            ChangeLanguage.DropDownItems.Add(lgHelper.ReturnValue("LanguageLithuanianButton"), null, AddLithuanianSystemTray);
+
+            ChangeLanguage.Text = lgHelper.ReturnValue("ChangeLanguage");
+
+            TrayManager.NotifyIcon.ContextMenuStrip.Items.Add(ChangeLanguage);
+        }
+
+        private void AddEnglishSystemTray(object sender, EventArgs e)
+        {
+            lgHelper.SetLanguage("en-US");
+        }
+
+        private void AddLithuanianSystemTray(object sender, EventArgs e)
+        {
+            lgHelper.SetLanguage("lt-LT");
+        }
+
         /// <summary>
         /// Adds Windows Start Up button to System tray
         /// </summary>
         public void AddToggleWindowsStartToTray()
         {
             // Setting up System tray item
-            WindowsStartUp.Text = "Windows Start Up";
+            WindowsStartUp.Text = lgHelper.ReturnValue("WindowsButton");
             WindowsStartUp.MouseDown += ToggleStartUpSystemTray;
 
             if (StartUpEnabled)
@@ -89,6 +113,17 @@ namespace DNS_changer.ViewModels.Settings
             {
                 _startUpEnabled = value;
                 NotifyOfPropertyChange(() => StartUpEnabled);
+            }
+        }
+
+        private string _currentLanguage;
+        public string CurrentLanguage
+        {
+            get { return _currentLanguage; }
+            set
+            {
+                _currentLanguage = value;
+                NotifyOfPropertyChange(() => CurrentLanguage);
             }
         }
 

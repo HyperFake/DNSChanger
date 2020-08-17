@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                     xmlns:util="clr-namespace:DNS_changer.Helper"
+
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="White">
     <Grid>
@@ -30,8 +32,8 @@
         </Grid.RowDefinitions>
         
         <!-- Menu buttons -->
-        <Button x:Name="GeneralSettings" Content="General" Grid.Column="0" Grid.Row="1"/>
-        <Button x:Name="PasswordSettings" Content="Password" Grid.Column="0" Grid.Row="2" />
+        <Button x:Name="GeneralSettings" Content="{util:Localization SettingsGeneralButton}" Grid.Column="0" Grid.Row="1"/>
+        <Button x:Name="PasswordSettings" Content="{util:Localization SettingsPasswordButton}" Grid.Column="0" Grid.Row="2" />
         
         <!-- Content -->
         <ContentControl x:Name="ActiveItem" Content="ContentControl" Grid.Column="2" Grid.Row="1" Grid.RowSpan="3"/>

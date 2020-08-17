@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DNS_changer.Views"
+        xmlns:util="clr-namespace:DNS_changer.Helper"
+
         mc:Ignorable="d"
         xmlns:cal="http://www.caliburnproject.org"
         cal:Message.Attach="[Event Closing] = [Action OnClose($eventArgs)]"
@@ -28,9 +30,9 @@
         </Grid.RowDefinitions>
         
         <!-- Navigation -->
-        <Button x:Name="LoadMainView" Content="Main Page" Grid.Column="1" Grid.Row="1"/>
-        <Button x:Name="LoadSettingsView" Content="Settings" Grid.Column="3" Grid.Row="1"/>
-        <Button x:Name="ExitApp" Content="Exit app" Grid.Column="4" Grid.Row="1"/>
+        <Button x:Name="LoadMainView" Content="{util:Localization MainButton}" Grid.Column="1" Grid.Row="1"/>
+        <Button x:Name="LoadSettingsView" Content="{util:Localization SettingsButton}" Grid.Column="3" Grid.Row="1"/>
+        <Button x:Name="ExitApp" Content="{util:Localization ExitButton}" Grid.Column="4" Grid.Row="1"/>
         
         <!-- Content -->
         <ContentControl x:Name="ActiveItem" Content="ContentControl" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="4"/>

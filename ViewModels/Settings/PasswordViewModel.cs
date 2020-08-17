@@ -10,6 +10,8 @@ namespace DNS_changer.ViewModels.Settings
     {
         // For password comparing & hashing
         PasswordHelper passwordHelper = new PasswordHelper();
+        // Language support
+        LanguageHelper lgHelper = new LanguageHelper();
 
 
         /// <summary>
@@ -17,7 +19,7 @@ namespace DNS_changer.ViewModels.Settings
         /// </summary>
         public void ChangePassword()
         {
-            if(ParsePasswordInput(NewPassword) && PasswordsComparing())
+            if (ParsePasswordInput(NewPassword) && PasswordsComparing())
             {
                 Properties.Settings.Default.Password = passwordHelper.HashPassword(NewPassword);
                 Properties.Settings.Default.Save();
@@ -27,7 +29,7 @@ namespace DNS_changer.ViewModels.Settings
         /// <summary>
         /// Parses password input and represents it's strength accordingly
         /// </summary>
-        /// <param name="password">Password user give</param>
+        /// <param name="password">Password user gave</param>
         /// <returns>true if user's given password is good. False otherwise</returns>
         private bool ParsePasswordInput(string password)
         {
@@ -45,14 +47,14 @@ namespace DNS_changer.ViewModels.Settings
             // Password must be atleast 3 symbols
             if (password.Length <= 3)
             {
-                ChangeLook("Too short", passwordValue, Brushes.Red, Brushes.Black);
+                ChangeLook(lgHelper.ReturnValue("BarTextShort"), passwordValue, Brushes.Red, Brushes.Black);
                 ButtonEnabled = false;
                 return false;
             }
             // Password must be less than 18 symbols
             else if (password.Length >= 20)
             {
-                ChangeLook("Too long", passwordValue, Brushes.Red, Brushes.Black);
+                ChangeLook(lgHelper.ReturnValue("BarTextLong"), passwordValue, Brushes.Red, Brushes.Black);
                 ButtonEnabled = false;
                 return false;
             }
@@ -70,22 +72,22 @@ namespace DNS_changer.ViewModels.Settings
             // Weak password
             if (passwordValue <= 30)
             {
-                ChangeLook("Weak", passwordValue, Brushes.Red, Brushes.Black);
+                ChangeLook(lgHelper.ReturnValue("BarTextWeak"), passwordValue, Brushes.Red, Brushes.Black);
                 return true;
             }
             else if (passwordValue > 30 && passwordValue <= 60)
             {
-                ChangeLook("Medium", passwordValue, Brushes.Yellow, Brushes.Black);
+                ChangeLook(lgHelper.ReturnValue("BarTextMedium"), passwordValue, Brushes.Yellow, Brushes.Black);
                 return true;
             }
             else if (passwordValue > 60 && passwordValue <= 85)
             {
-                ChangeLook("Good", passwordValue, Brushes.LightGreen, Brushes.Black);
+                ChangeLook(lgHelper.ReturnValue("BarTextGood"), passwordValue, Brushes.LightGreen, Brushes.Black);
                 return true;
             }
             else if (passwordValue > 85)
             {
-                ChangeLook("Very Good", passwordValue, Brushes.Green, Brushes.Black);
+                ChangeLook(lgHelper.ReturnValue("BarTextVGood"), passwordValue, Brushes.Green, Brushes.Black);
                 return true;
             }
 
@@ -97,7 +99,7 @@ namespace DNS_changer.ViewModels.Settings
         /// </summary>
         private void DefaultLook()
         {
-            ChangeLook("Input Password", 5, Brushes.LightGray, Brushes.Gray);
+            ChangeLook(lgHelper.ReturnValue("BarDefaultText"), 5, Brushes.LightGray, Brushes.Gray);
         }
 
         /// <summary>
@@ -123,17 +125,17 @@ namespace DNS_changer.ViewModels.Settings
         {
             if(!passwordHelper.ComparePasswordToStored(OldPassword))
             {
-                ErrorText = "Old password is incorrect";
+                ErrorText = lgHelper.ReturnValue("OldPasswordIncorrect");
                 return false;
             }
             else if(!NewPassword.Equals(RepeatPassword))
             {
-                ErrorText = "New passwords doesn't match";
+                ErrorText = lgHelper.ReturnValue("NewPasswordNoMatch");
                 return false;
             }
             else if(passwordHelper.ComparePasswordToStored(NewPassword))
             {
-                ErrorText = "New password cannot not match old one";
+                ErrorText = lgHelper.ReturnValue("NewPasswordOldValue");
                 return false;
             }
 

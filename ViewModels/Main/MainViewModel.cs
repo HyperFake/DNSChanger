@@ -5,6 +5,7 @@ using System.Management;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Net;
+using System;
 
 namespace DNS_changer.ViewModels.Main
 {

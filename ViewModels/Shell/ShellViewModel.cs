@@ -5,7 +5,6 @@ using DNS_changer.ViewModels.Settings;
 using System;
 using System.ComponentModel;
 using System.Windows;
-using System.Windows.Forms;
 
 namespace DNS_changer.ViewModels.Shell
 {
@@ -13,6 +12,9 @@ namespace DNS_changer.ViewModels.Shell
     {
         // System tray
         static TrayManager trayManager = new TrayManager();
+
+        // Language Helper for multi languages support
+        LanguageHelper lgHelper = new LanguageHelper();
 
         // Views
         MainViewModel mainView = new MainViewModel(trayManager);
@@ -27,7 +29,7 @@ namespace DNS_changer.ViewModels.Shell
             AttachShowWindow();
             AddMainWindowButton();
             settingsView.AddWindowsStartButton();
-
+            settingsView.AddLanguageButton();
             AddExitAppButton();
         }
 
@@ -86,7 +88,7 @@ namespace DNS_changer.ViewModels.Shell
 
         private void AddExitAppButton()
         {
-            trayManager.AddItemToContextStripMenu("Exit", null, ExitAppSystemTray);
+            trayManager.AddItemToContextStripMenu(lgHelper.ReturnValue("ExitButton"), null, ExitAppSystemTray);
         }
 
         /// <summary>
@@ -94,7 +96,7 @@ namespace DNS_changer.ViewModels.Shell
         /// </summary>
         private void AddMainWindowButton()
         {
-            trayManager.AddItemToContextStripMenu("DNS Changer", null, ShowMainWindow);
+            trayManager.AddItemToContextStripMenu(lgHelper.ReturnValue("MainButton"), null, ShowMainWindow);
         }
 
         /// <summary>

@@ -7,16 +7,24 @@ namespace DNS_changer.ViewModels.Login
 {
     class LoginViewModel : Screen
     {
-
         // For closing screen upon succesful login
         public delegate void LoginEventHandler(object sender, EventArgs e);
         public event LoginEventHandler OnLoginEvent;
+
+        // Language helper for different language support
+        LanguageHelper lgHelper = new LanguageHelper();
 
         /// <summary>
         /// Login button function, compares passwords and activates login event if success
         /// </summary>
         public void LoginButton()
         {
+            if(string.IsNullOrWhiteSpace(PasswordInput))
+            {
+                LoginErrorText = lgHelper.ReturnValue("LoginRegisterEmpty");
+                return;
+            }
+
             PasswordHelper passwordHelper = new PasswordHelper();
 
             if (passwordHelper.ComparePasswordToStored(PasswordInput))
@@ -28,7 +36,7 @@ namespace DNS_changer.ViewModels.Login
             }
             else
             {
-                LoginErrorText = "Password is incorrect. Try again";
+                LoginErrorText = lgHelper.ReturnValue("LoginErrorText");
             }
         }
 

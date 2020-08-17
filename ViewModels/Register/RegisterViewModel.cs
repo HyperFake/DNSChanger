@@ -13,6 +13,9 @@ namespace DNS_changer.ViewModels.Register
         public delegate void RegisterEventHandler(object sender, EventArgs e);
         public event RegisterEventHandler OnRegisterEvent;
 
+        // language support
+        LanguageHelper lgHelper = new LanguageHelper();
+
         public RegisterViewModel()
         {
             // Set default parameters
@@ -60,14 +63,14 @@ namespace DNS_changer.ViewModels.Register
             // Password must be atleast 3 symbols
             if (password.Length <= 3)
             {
-                ChangeLook("Too short", passwordValue, Brushes.Red, Brushes.Black);
+                ChangeLook(lgHelper.ReturnValue("BarTextShort"), passwordValue, Brushes.Red, Brushes.Black);
                 ButtonEnabled = false;
                 return false;
             }
             // Password must be less than 18 symbols
             if (password.Length >= 20)
             {
-                ChangeLook("Too long", passwordValue, Brushes.Red, Brushes.Black);
+                ChangeLook(lgHelper.ReturnValue("BarTextLong"), passwordValue, Brushes.Red, Brushes.Black);
                 ButtonEnabled = false;
                 return false;
             }
@@ -85,22 +88,22 @@ namespace DNS_changer.ViewModels.Register
             // Weak password
             if(passwordValue <= 30)
             {
-                ChangeLook("Weak", passwordValue, Brushes.Red, Brushes.Black);
+                ChangeLook(lgHelper.ReturnValue("BarTextWeak"), passwordValue, Brushes.Red, Brushes.Black);
                 return true;
             }
             else if(passwordValue > 30 && passwordValue <= 60)
             {
-                ChangeLook("Medium", passwordValue, Brushes.Yellow, Brushes.Black);
+                ChangeLook(lgHelper.ReturnValue("BarTextMedium"), passwordValue, Brushes.Yellow, Brushes.Black);
                 return true;
             }
             else if(passwordValue > 60 && passwordValue <= 85)
             {
-                ChangeLook("Good", passwordValue, Brushes.LightGreen, Brushes.Black);
+                ChangeLook(lgHelper.ReturnValue("BarTextGood"), passwordValue, Brushes.LightGreen, Brushes.Black);
                 return true;
             }
             else if (passwordValue > 85)
             {
-                ChangeLook("Very Good", passwordValue, Brushes.Green, Brushes.Black);
+                ChangeLook(lgHelper.ReturnValue("BarTextVGood"), passwordValue, Brushes.Green, Brushes.Black);
                 return true;
             }
 
@@ -137,7 +140,7 @@ namespace DNS_changer.ViewModels.Register
         /// </summary>
         private void DefaultLook()
         {
-            ChangeLook("Input Password", 5, Brushes.LightGray, Brushes.Gray);
+            ChangeLook(lgHelper.ReturnValue("BarDefaultText"), 5, Brushes.LightGray, Brushes.Gray);
         }
 
         private string _password;
