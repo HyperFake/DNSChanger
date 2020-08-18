@@ -16,6 +16,9 @@ namespace DNS_changer.ViewModels.Register
         // language support
         LanguageHelper lgHelper = new LanguageHelper();
 
+        // Logging
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         public RegisterViewModel()
         {
             // Set default parameters
@@ -27,19 +30,27 @@ namespace DNS_changer.ViewModels.Register
         /// </summary>
         public void RegisterButton()
         {
-            if(ParsePasswordInput(PasswordInput))
+            try
             {
-                string hashedPassword = new PasswordHelper().HashPassword(PasswordInput); 
-                // Set the password
-                Properties.Settings.Default.Password = hashedPassword;
-                Properties.Settings.Default.Save();
+                if (ParsePasswordInput(PasswordInput))
+                {
+                    string hashedPassword = new PasswordHelper().HashPassword(PasswordInput);
 
+                    // Set the password
+                    Properties.Settings.Default.Password = hashedPassword;
+                    Properties.Settings.Default.Save();
 
-                // Change the window
-                if (OnRegisterEvent == null) return;
-                EventArgs args = new EventArgs();
-                OnRegisterEvent(this, args);
+                    // Change the window
+                    if (OnRegisterEvent == null) return;
+                    EventArgs args = new EventArgs();
+                    OnRegisterEvent(this, args);
+                }
             }
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Failed to register");
+            }
+
         }
 
         /// <summary>
@@ -49,64 +60,72 @@ namespace DNS_changer.ViewModels.Register
         /// <returns>true if it meets parameters. False otherwise</returns>
         private bool ParsePasswordInput(string password)
         {
-            // If empty set default look
-            if(string.IsNullOrWhiteSpace(password))
+            try
             {
-                DefaultLook();
-                ButtonEnabled = false;
-                return false;
+                // If empty set default look
+                if (string.IsNullOrWhiteSpace(password))
+                {
+                    DefaultLook();
+                    ButtonEnabled = false;
+                    return false;
+                }
+
+                // This is password security number that we use for progressbar
+                int passwordValue = password.Length * 5;
+
+                // Password must be atleast 3 symbols
+                if (password.Length <= 3)
+                {
+                    ChangeLook(lgHelper.SavedValue("BarTextShort"), passwordValue, Brushes.Red, Brushes.Black);
+                    ButtonEnabled = false;
+                    return false;
+                }
+                // Password must be less than 18 symbols
+                if (password.Length >= 20)
+                {
+                    ChangeLook(lgHelper.SavedValue("BarTextLong"), passwordValue, Brushes.Red, Brushes.Black);
+                    ButtonEnabled = false;
+                    return false;
+                }
+
+                // Enable register button as it meets standarts
+                ButtonEnabled = true;
+
+
+                // Calculate additional password strength
+                if (password.Any(char.IsDigit))
+                    passwordValue += 10;
+                if (password.Any(char.IsUpper))
+                    passwordValue += 10;
+
+                // Weak password
+                if (passwordValue <= 30)
+                {
+                    ChangeLook(lgHelper.SavedValue("BarTextWeak"), passwordValue, Brushes.Red, Brushes.Black);
+                    return true;
+                }
+                else if (passwordValue > 30 && passwordValue <= 60)
+                {
+                    ChangeLook(lgHelper.SavedValue("BarTextMedium"), passwordValue, Brushes.Yellow, Brushes.Black);
+                    return true;
+                }
+                else if (passwordValue > 60 && passwordValue <= 85)
+                {
+                    ChangeLook(lgHelper.SavedValue("BarTextGood"), passwordValue, Brushes.LightGreen, Brushes.Black);
+                    return true;
+                }
+                else if (passwordValue > 85)
+                {
+                    ChangeLook(lgHelper.SavedValue("BarTextVGood"), passwordValue, Brushes.Green, Brushes.Black);
+                    return true;
+                }
             }
-
-            // This is password security number that we use for progressbar
-            int passwordValue = password.Length * 5;
-
-            // Password must be atleast 3 symbols
-            if (password.Length <= 3)
+            catch (Exception ex)
             {
-                ChangeLook(lgHelper.ReturnValue("BarTextShort"), passwordValue, Brushes.Red, Brushes.Black);
-                ButtonEnabled = false;
-                return false;
+                logger.Error(ex, "Failed to parse password input");
+                throw;
             }
-            // Password must be less than 18 symbols
-            if (password.Length >= 20)
-            {
-                ChangeLook(lgHelper.ReturnValue("BarTextLong"), passwordValue, Brushes.Red, Brushes.Black);
-                ButtonEnabled = false;
-                return false;
-            }
-
-            // Enable register button as it meets standarts
-            ButtonEnabled = true;
-
-
-            // Calculate additional password strength
-            if (password.Any(char.IsDigit))
-                passwordValue += 10;
-            if (password.Any(char.IsUpper))
-                passwordValue += 10;
-
-            // Weak password
-            if(passwordValue <= 30)
-            {
-                ChangeLook(lgHelper.ReturnValue("BarTextWeak"), passwordValue, Brushes.Red, Brushes.Black);
-                return true;
-            }
-            else if(passwordValue > 30 && passwordValue <= 60)
-            {
-                ChangeLook(lgHelper.ReturnValue("BarTextMedium"), passwordValue, Brushes.Yellow, Brushes.Black);
-                return true;
-            }
-            else if(passwordValue > 60 && passwordValue <= 85)
-            {
-                ChangeLook(lgHelper.ReturnValue("BarTextGood"), passwordValue, Brushes.LightGreen, Brushes.Black);
-                return true;
-            }
-            else if (passwordValue > 85)
-            {
-                ChangeLook(lgHelper.ReturnValue("BarTextVGood"), passwordValue, Brushes.Green, Brushes.Black);
-                return true;
-            }
-
+            
             return false;
         }
 
@@ -140,7 +159,7 @@ namespace DNS_changer.ViewModels.Register
         /// </summary>
         private void DefaultLook()
         {
-            ChangeLook(lgHelper.ReturnValue("BarDefaultText"), 5, Brushes.LightGray, Brushes.Gray);
+            ChangeLook(lgHelper.SavedValue("BarDefaultText"), 5, Brushes.LightGray, Brushes.Gray);
         }
 
         private string _password;

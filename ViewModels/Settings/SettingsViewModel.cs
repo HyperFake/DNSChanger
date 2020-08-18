@@ -18,11 +18,17 @@ namespace DNS_changer.ViewModels.Settings
             GeneralSettings();
         }
 
+        /// <summary>
+        /// Adds language selection button to system tray
+        /// </summary>
         public void AddLanguageButton()
         {
             generalView.AddChangeLanguageToTray();
         }
 
+        /// <summary>
+        /// Adds Windows start up toggle button to system tray
+        /// </summary>
         public void AddWindowsStartButton()
         {
             generalView.AddToggleWindowsStartToTray();

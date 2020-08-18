@@ -15,6 +15,9 @@ namespace DNS_changer.ViewModels.Settings
         // Start Up item
         ToolStripMenuItem WindowsStartUp = new ToolStripMenuItem();
 
+        // Logging
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// GeneralViewModel Constructor, checks if DNS changer is enabled at start
         /// </summary>
@@ -23,22 +26,43 @@ namespace DNS_changer.ViewModels.Settings
             StartUpEnabled = startUpHelper.CheckRegistryState();
         }
 
+        /// <summary>
+        /// Adds language button to system tray
+        /// </summary>
         public void AddChangeLanguageToTray()
         {
-            ToolStripMenuItem ChangeLanguage = new ToolStripMenuItem();
-            ChangeLanguage.DropDownItems.Add(lgHelper.ReturnValue("LanguageEnglishButton"), null, AddEnglishSystemTray);
-            ChangeLanguage.DropDownItems.Add(lgHelper.ReturnValue("LanguageLithuanianButton"), null, AddLithuanianSystemTray);
+            try
+            {
+                ToolStripMenuItem languageStripMenu = new ToolStripMenuItem();
+                languageStripMenu.DropDownItems.Add(lgHelper.SavedValue("LanguageEnglishButton"), null, AddEnglishSystemTray);
+                languageStripMenu.DropDownItems.Add(lgHelper.SavedValue("LanguageLithuanianButton"), null, AddLithuanianSystemTray);
 
-            ChangeLanguage.Text = lgHelper.ReturnValue("ChangeLanguage");
+                languageStripMenu.Text = lgHelper.SavedValue("ChangeLanguage");
 
-            TrayManager.NotifyIcon.ContextMenuStrip.Items.Add(ChangeLanguage);
+                TrayManager.NotifyIcon.ContextMenuStrip.Items.Add(languageStripMenu);
+            }
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Failed to add language button to system tray.");
+            }
+
         }
 
+        /// <summary>
+        /// Sets the language to en-US
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">EventArgs</param>
         private void AddEnglishSystemTray(object sender, EventArgs e)
         {
             lgHelper.SetLanguage("en-US");
         }
 
+        /// <summary>
+        /// Sets the languae to lt-LT
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">EventArgs</param>
         private void AddLithuanianSystemTray(object sender, EventArgs e)
         {
             lgHelper.SetLanguage("lt-LT");
@@ -49,17 +73,25 @@ namespace DNS_changer.ViewModels.Settings
         /// </summary>
         public void AddToggleWindowsStartToTray()
         {
-            // Setting up System tray item
-            WindowsStartUp.Text = lgHelper.ReturnValue("WindowsButton");
-            WindowsStartUp.MouseDown += ToggleStartUpSystemTray;
+            try
+            {
+                // Setting up System tray item
+                WindowsStartUp.Text = lgHelper.SavedValue("WindowsButton");
+                WindowsStartUp.MouseDown += ToggleStartUpSystemTray;
 
-            if (StartUpEnabled)
-                WindowsStartUp.Checked = true;
-            else
-                WindowsStartUp.Checked = false;
+                if (StartUpEnabled)
+                    WindowsStartUp.Checked = true;
+                else
+                    WindowsStartUp.Checked = false;
 
-            // Adding it
-            TrayManager.NotifyIcon.ContextMenuStrip.Items.Add(WindowsStartUp);
+                // Adding it
+                TrayManager.NotifyIcon.ContextMenuStrip.Items.Add(WindowsStartUp);
+            }
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Failed to add windows start up toggle to system tray");
+            }
+
         }
 
 
@@ -68,18 +100,26 @@ namespace DNS_changer.ViewModels.Settings
         /// </summary>
         private void ToggleStartUp()
         {
-            if(StartUpEnabled)
+            try
             {
-                startUpHelper.RemoveStartUpFromRegistry();
-                StartUpEnabled = false;
-                WindowsStartUp.Checked = false;
+                if (StartUpEnabled)
+                {
+                    startUpHelper.RemoveStartUpFromRegistry();
+                    StartUpEnabled = false;
+                    WindowsStartUp.Checked = false;
+                }
+                else
+                {
+                    startUpHelper.AddStartUpToRegistry();
+                    StartUpEnabled = true;
+                    WindowsStartUp.Checked = true;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                startUpHelper.AddStartUpToRegistry();
-                StartUpEnabled = true;
-                WindowsStartUp.Checked = true;
+                logger.Error(ex, "Failed to toggle windows start up");
             }
+
         }
 
         /// <summary>

@@ -14,30 +14,41 @@ namespace DNS_changer.ViewModels.Login
         // Language helper for different language support
         LanguageHelper lgHelper = new LanguageHelper();
 
+        // Logging
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Login button function, compares passwords and activates login event if success
         /// </summary>
         public void LoginButton()
         {
-            if(string.IsNullOrWhiteSpace(PasswordInput))
+            try
             {
-                LoginErrorText = lgHelper.ReturnValue("LoginRegisterEmpty");
-                return;
+                if (string.IsNullOrWhiteSpace(PasswordInput))
+                {
+                    LoginErrorText = lgHelper.SavedValue("LoginRegisterEmpty");
+                    return;
+                }
+
+                PasswordHelper passwordHelper = new PasswordHelper();
+
+                if (passwordHelper.ComparePasswordToStored(PasswordInput))
+                {
+                    if (OnLoginEvent == null) return;
+
+                    EventArgs args = new EventArgs();
+                    OnLoginEvent(this, args);
+                }
+                else
+                {
+                    LoginErrorText = lgHelper.SavedValue("LoginErrorText");
+                }
+            }
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Login function failed");
             }
 
-            PasswordHelper passwordHelper = new PasswordHelper();
-
-            if (passwordHelper.ComparePasswordToStored(PasswordInput))
-            {
-                if (OnLoginEvent == null) return;
-
-                EventArgs args = new EventArgs();
-                OnLoginEvent(this, args);
-            }
-            else
-            {
-                LoginErrorText = lgHelper.ReturnValue("LoginErrorText");
-            }
         }
 
         /// <summary>

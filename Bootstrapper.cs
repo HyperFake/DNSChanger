@@ -16,6 +16,10 @@ namespace DNS_changer
         // Set saved language before any view appears
         LanguageHelper lgHelper = new LanguageHelper();
 
+        // Logging
+        Logging logging = new Logging();
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         public Bootstrapper()
         {
             // Gets current process name
@@ -25,16 +29,24 @@ namespace DNS_changer
             if (Process.GetProcesses().Count(p => p.ProcessName == DNSChangerName) > 1)
                 return;
 
+            // Sets default app language
             SetDefaultLanguage();
+
+            // Sets logging config
+            logging.SetConfig();
+
             Initialize();
         }
 
+        /// <summary>
+        /// Sets default language if there isn't one, otherwise sets the saved language
+        /// </summary>
         private void SetDefaultLanguage()
         {
+
             if(string.IsNullOrWhiteSpace(Properties.Settings.Default.Language))
             {
-                Properties.Settings.Default.Language = "en-US";
-                Properties.Settings.Default.Save();
+                lgHelper.SetLanguage("en-US");
                 return;
             }
 
@@ -80,16 +92,24 @@ namespace DNS_changer
         /// <param name="loginViewModel">LoginViewModel</param>
         private void LoginSuccess(LoginViewModel loginViewModel)
         {
-            IWindowManager windowManager = IoC.Get<IWindowManager>();
-            ShellViewModel shellViewModel = IoC.Get<ShellViewModel>();
+            try
+            {
+                IWindowManager windowManager = IoC.Get<IWindowManager>();
+                ShellViewModel shellViewModel = IoC.Get<ShellViewModel>();
 
-            Application.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+                Application.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-            loginViewModel.TryClose();
+                loginViewModel.TryClose();
 
-            Application.ShutdownMode = ShutdownMode.OnLastWindowClose;
+                Application.ShutdownMode = ShutdownMode.OnLastWindowClose;
 
-            windowManager.ShowDialog(shellViewModel, null, null);
+                windowManager.ShowDialog(shellViewModel, null, null);
+            }
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Failed to close Login window");
+            }
+
         }
         /// <summary>
         /// Register success method, which closes Register window and opens Shell window
@@ -97,16 +117,24 @@ namespace DNS_changer
         /// <param name="registerViewModel">RegisterViewModel</param>
         private void RegisterSuccess(RegisterViewModel registerViewModel)
         {
-            IWindowManager windowManager = IoC.Get<IWindowManager>();
-            ShellViewModel shellViewModel = IoC.Get<ShellViewModel>();
+            try
+            {
+                IWindowManager windowManager = IoC.Get<IWindowManager>();
+                ShellViewModel shellViewModel = IoC.Get<ShellViewModel>();
 
-            Application.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+                Application.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-            registerViewModel.TryClose();
+                registerViewModel.TryClose();
 
-            Application.ShutdownMode = ShutdownMode.OnLastWindowClose;
+                Application.ShutdownMode = ShutdownMode.OnLastWindowClose;
 
-            windowManager.ShowDialog(shellViewModel, null, null);
+                windowManager.ShowDialog(shellViewModel, null, null);
+            }
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Failed to close Register window");
+            }
+
         }
 
     }

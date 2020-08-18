@@ -20,6 +20,9 @@ namespace DNS_changer.ViewModels.Shell
         MainViewModel mainView = new MainViewModel(trayManager);
         SettingsViewModel settingsView = new SettingsViewModel(trayManager);
 
+        // Logging
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         public ShellViewModel()
         {
             // On startup load main view
@@ -31,6 +34,7 @@ namespace DNS_changer.ViewModels.Shell
             settingsView.AddWindowsStartButton();
             settingsView.AddLanguageButton();
             AddExitAppButton();
+
         }
 
         /// <summary>
@@ -61,7 +65,7 @@ namespace DNS_changer.ViewModels.Shell
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{ex}");
+                logger.Error(ex, "Failed to exit the app");
             }
             return;
         }
@@ -88,7 +92,7 @@ namespace DNS_changer.ViewModels.Shell
 
         private void AddExitAppButton()
         {
-            trayManager.AddItemToContextStripMenu(lgHelper.ReturnValue("ExitButton"), null, ExitAppSystemTray);
+            trayManager.AddItemToContextStripMenu(lgHelper.SavedValue("ExitButton"), null, ExitAppSystemTray);
         }
 
         /// <summary>
@@ -96,7 +100,7 @@ namespace DNS_changer.ViewModels.Shell
         /// </summary>
         private void AddMainWindowButton()
         {
-            trayManager.AddItemToContextStripMenu(lgHelper.ReturnValue("MainButton"), null, ShowMainWindow);
+            trayManager.AddItemToContextStripMenu(lgHelper.SavedValue("MainButton"), null, ShowMainWindow);
         }
 
         /// <summary>
@@ -104,7 +108,7 @@ namespace DNS_changer.ViewModels.Shell
         /// </summary>
         private void AttachShowWindow()
         {
-            trayManager.NotifyIcon.DoubleClick += ShowMainWindow;
+                trayManager.NotifyIcon.DoubleClick += ShowMainWindow;
         }
 
         /// <summary>

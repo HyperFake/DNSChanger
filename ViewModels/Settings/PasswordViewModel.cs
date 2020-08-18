@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using DNS_changer.Helper;
+using System;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -10,20 +11,32 @@ namespace DNS_changer.ViewModels.Settings
     {
         // For password comparing & hashing
         PasswordHelper passwordHelper = new PasswordHelper();
+
         // Language support
         LanguageHelper lgHelper = new LanguageHelper();
 
+        // Logging
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Changes password if parameters meet
         /// </summary>
         public void ChangePassword()
         {
-            if (ParsePasswordInput(NewPassword) && PasswordsComparing())
+            try
             {
-                Properties.Settings.Default.Password = passwordHelper.HashPassword(NewPassword);
-                Properties.Settings.Default.Save();
+                // Check if password meets the requirements and isn't used as current password
+                if (ParsePasswordInput(NewPassword) && PasswordsComparing())
+                {
+                    Properties.Settings.Default.Password = passwordHelper.HashPassword(NewPassword);
+                    Properties.Settings.Default.Save();
+                }
             }
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Failed to change the password");
+            }
+
         }
 
         /// <summary>
@@ -33,62 +46,69 @@ namespace DNS_changer.ViewModels.Settings
         /// <returns>true if user's given password is good. False otherwise</returns>
         private bool ParsePasswordInput(string password)
         {
-            // If empty set default look
-            if (string.IsNullOrWhiteSpace(password))
+            try
             {
-                DefaultLook();
-                ButtonEnabled = false;
-                return false;
-            }
+                // If empty set default look
+                if (string.IsNullOrWhiteSpace(password))
+                {
+                    DefaultLook();
+                    ButtonEnabled = false;
+                    return false;
+                }
 
-            // This is password security number that we use for progressbar
-            int passwordValue = password.Length * 5;
+                // This is password security number that we use for progressbar
+                int passwordValue = password.Length * 5;
 
-            // Password must be atleast 3 symbols
-            if (password.Length <= 3)
-            {
-                ChangeLook(lgHelper.ReturnValue("BarTextShort"), passwordValue, Brushes.Red, Brushes.Black);
-                ButtonEnabled = false;
-                return false;
-            }
-            // Password must be less than 18 symbols
-            else if (password.Length >= 20)
-            {
-                ChangeLook(lgHelper.ReturnValue("BarTextLong"), passwordValue, Brushes.Red, Brushes.Black);
-                ButtonEnabled = false;
-                return false;
-            }
+                // Password must be atleast 3 symbols
+                if (password.Length <= 3)
+                {
+                    ChangeLook(lgHelper.SavedValue("BarTextShort"), passwordValue, Brushes.Red, Brushes.Black);
+                    ButtonEnabled = false;
+                    return false;
+                }
+                // Password must be less than 18 symbols
+                else if (password.Length >= 20)
+                {
+                    ChangeLook(lgHelper.SavedValue("BarTextLong"), passwordValue, Brushes.Red, Brushes.Black);
+                    ButtonEnabled = false;
+                    return false;
+                }
 
-            // Enable register button as it meets standarts
-            ButtonEnabled = true;
+                // Enable register button as it meets standarts
+                ButtonEnabled = true;
 
 
-            // Calculate additional password strength
-            if (password.Any(char.IsDigit))
-                passwordValue += 10;
-            if (password.Any(char.IsUpper))
-                passwordValue += 10;
+                // Calculate additional password strength
+                if (password.Any(char.IsDigit))
+                    passwordValue += 10;
+                if (password.Any(char.IsUpper))
+                    passwordValue += 10;
 
-            // Weak password
-            if (passwordValue <= 30)
-            {
-                ChangeLook(lgHelper.ReturnValue("BarTextWeak"), passwordValue, Brushes.Red, Brushes.Black);
-                return true;
+                // Weak password
+                if (passwordValue <= 30)
+                {
+                    ChangeLook(lgHelper.SavedValue("BarTextWeak"), passwordValue, Brushes.Red, Brushes.Black);
+                    return true;
+                }
+                else if (passwordValue > 30 && passwordValue <= 60)
+                {
+                    ChangeLook(lgHelper.SavedValue("BarTextMedium"), passwordValue, Brushes.Yellow, Brushes.Black);
+                    return true;
+                }
+                else if (passwordValue > 60 && passwordValue <= 85)
+                {
+                    ChangeLook(lgHelper.SavedValue("BarTextGood"), passwordValue, Brushes.LightGreen, Brushes.Black);
+                    return true;
+                }
+                else if (passwordValue > 85)
+                {
+                    ChangeLook(lgHelper.SavedValue("BarTextVGood"), passwordValue, Brushes.Green, Brushes.Black);
+                    return true;
+                }
             }
-            else if (passwordValue > 30 && passwordValue <= 60)
+            catch(Exception ex)
             {
-                ChangeLook(lgHelper.ReturnValue("BarTextMedium"), passwordValue, Brushes.Yellow, Brushes.Black);
-                return true;
-            }
-            else if (passwordValue > 60 && passwordValue <= 85)
-            {
-                ChangeLook(lgHelper.ReturnValue("BarTextGood"), passwordValue, Brushes.LightGreen, Brushes.Black);
-                return true;
-            }
-            else if (passwordValue > 85)
-            {
-                ChangeLook(lgHelper.ReturnValue("BarTextVGood"), passwordValue, Brushes.Green, Brushes.Black);
-                return true;
+                logger.Error(ex, "Failed to parse the password input (Password Change View)");
             }
 
             return false;
@@ -99,7 +119,7 @@ namespace DNS_changer.ViewModels.Settings
         /// </summary>
         private void DefaultLook()
         {
-            ChangeLook(lgHelper.ReturnValue("BarDefaultText"), 5, Brushes.LightGray, Brushes.Gray);
+            ChangeLook(lgHelper.SavedValue("BarDefaultText"), 5, Brushes.LightGray, Brushes.Gray);
         }
 
         /// <summary>
@@ -111,10 +131,18 @@ namespace DNS_changer.ViewModels.Settings
         /// <param name="barTextColor">Bar text color</param>
         private void ChangeLook(string HeaderText, int barValue, Brush barColor, Brush barTextColor)
         {
-            BarText = HeaderText;
-            BarValue = barValue;
-            BarColor = barColor;
-            BarTextColor = barTextColor;
+            try
+            {
+                BarText = HeaderText;
+                BarValue = barValue;
+                BarColor = barColor;
+                BarTextColor = barTextColor;
+            }
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Failed to change look (Password change view)");
+            }
+
         }
 
         /// <summary>
@@ -123,20 +151,27 @@ namespace DNS_changer.ViewModels.Settings
         /// <returns></returns>
         private bool PasswordsComparing()
         {
-            if(!passwordHelper.ComparePasswordToStored(OldPassword))
+            try
             {
-                ErrorText = lgHelper.ReturnValue("OldPasswordIncorrect");
-                return false;
+                if (!passwordHelper.ComparePasswordToStored(OldPassword))
+                {
+                    ErrorText = lgHelper.SavedValue("OldPasswordIncorrect");
+                    return false;
+                }
+                else if (!NewPassword.Equals(RepeatPassword))
+                {
+                    ErrorText = lgHelper.SavedValue("NewPasswordNoMatch");
+                    return false;
+                }
+                else if (passwordHelper.ComparePasswordToStored(NewPassword))
+                {
+                    ErrorText = lgHelper.SavedValue("NewPasswordOldValue");
+                    return false;
+                }
             }
-            else if(!NewPassword.Equals(RepeatPassword))
+            catch(Exception ex)
             {
-                ErrorText = lgHelper.ReturnValue("NewPasswordNoMatch");
-                return false;
-            }
-            else if(passwordHelper.ComparePasswordToStored(NewPassword))
-            {
-                ErrorText = lgHelper.ReturnValue("NewPasswordOldValue");
-                return false;
+                logger.Error(ex, "Failed to compare passwords (Password change view)");
             }
 
             ErrorText = "";

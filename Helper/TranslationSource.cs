@@ -19,18 +19,18 @@ namespace DNS_changer.Helper
 
         public string this[string key]
         {
-            get { return this.manager.GetString(key, this.currentCulture); }
+            get { return manager.GetString(key, currentCulture); }
         }
 
         public CultureInfo CurrentCulture
         {
-            get { return this.currentCulture; }
+            get { return currentCulture; }
             set
             {
-                if(this.currentCulture != value)
+                if(currentCulture != value)
                 {
-                    this.currentCulture = value;
-                    var @event = this.PropertyChanged;
+                    currentCulture = value;
+                    var @event = PropertyChanged;
                     if (@event != null)
                         @event.Invoke(this, new PropertyChangedEventArgs(string.Empty));
                 }

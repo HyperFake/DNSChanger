@@ -14,6 +14,9 @@ namespace DNS_changer.ViewModels.Main
         // System tray
         private TrayManager trayManager;
 
+        // Logging
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         public MainViewModel(TrayManager Manager)
         {
             trayManager = Manager;
@@ -43,7 +46,7 @@ namespace DNS_changer.ViewModels.Main
         /// </summary>
         public void ResetDNS()
         {
-            UnsetDNS();
+            ResetAllDNS();
             CheckIfDNSChanged();
         }
 
@@ -54,53 +57,68 @@ namespace DNS_changer.ViewModels.Main
         /// <param name="DNSInfo">DNS string. Main and alternative</param>
         private static void SetDNS(string[] DNSInfo)
         {
-            NetworkInterface CurrentInterface = GetActiveEthernetOrWifiNetworkInterface();
-            if (CurrentInterface == null) return;
-
-            ManagementClass objMC = new ManagementClass("Win32_NetworkAdapterConfiguration");
-            ManagementObjectCollection objMOC = objMC.GetInstances();
-            foreach (ManagementObject objMO in objMOC)
+            try
             {
-                if ((bool)objMO["IPEnabled"])
+                NetworkInterface CurrentInterface = GetActiveEthernetOrWifiNetworkInterface();
+                if (CurrentInterface == null) return;
+
+                ManagementClass objMC = new ManagementClass("Win32_NetworkAdapterConfiguration");
+                ManagementObjectCollection objMOC = objMC.GetInstances();
+                foreach (ManagementObject objMO in objMOC)
                 {
-                    if (objMO["Description"].ToString().Equals(CurrentInterface.Description))
+                    if ((bool)objMO["IPEnabled"])
                     {
-                        ManagementBaseObject objdns = objMO.GetMethodParameters("SetDNSServerSearchOrder");
-                        if (objdns != null)
+                        if (objMO["Description"].ToString().Equals(CurrentInterface.Description))
                         {
-                            objdns["DNSServerSearchOrder"] = DNSInfo;
-                            objMO.InvokeMethod("SetDNSServerSearchOrder", objdns, null);
+                            ManagementBaseObject objdns = objMO.GetMethodParameters("SetDNSServerSearchOrder");
+                            if (objdns != null)
+                            {
+                                objdns["DNSServerSearchOrder"] = DNSInfo;
+                                objMO.InvokeMethod("SetDNSServerSearchOrder", objdns, null);
+                            }
                         }
                     }
                 }
+            }
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Failed to set DNS");
             }
         }
 
         /// <summary>
         /// Unsets Main and Alternative local DNS
         /// </summary>
-        private static void UnsetDNS()
+        private static void ResetAllDNS()
         {
-            NetworkInterface CurrentInterface = GetActiveEthernetOrWifiNetworkInterface();
-            if (CurrentInterface == null) return;
-
-            ManagementClass objMC = new ManagementClass("Win32_NetworkAdapterConfiguration");
-            ManagementObjectCollection objMOC = objMC.GetInstances();
-            foreach (ManagementObject objMO in objMOC)
+            try
             {
-                if ((bool)objMO["IPEnabled"])
+                NetworkInterface CurrentInterface = GetActiveEthernetOrWifiNetworkInterface();
+                if (CurrentInterface == null) return;
+
+                ManagementClass objMC = new ManagementClass("Win32_NetworkAdapterConfiguration");
+                ManagementObjectCollection objMOC = objMC.GetInstances();
+                foreach (ManagementObject objMO in objMOC)
                 {
-                    if (objMO["Description"].ToString().Equals(CurrentInterface.Description))
+                    if ((bool)objMO["IPEnabled"])
                     {
-                        ManagementBaseObject objdns = objMO.GetMethodParameters("SetDNSServerSearchOrder");
-                        if (objdns != null)
+                        if (objMO["Description"].ToString().Equals(CurrentInterface.Description))
                         {
-                            objdns["DNSServerSearchOrder"] = null;
-                            objMO.InvokeMethod("SetDNSServerSearchOrder", objdns, null);
+                            ManagementBaseObject objdns = objMO.GetMethodParameters("SetDNSServerSearchOrder");
+                            if (objdns != null)
+                            {
+                                objdns["DNSServerSearchOrder"] = null;
+                                objMO.InvokeMethod("SetDNSServerSearchOrder", objdns, null);
+                            }
                         }
                     }
                 }
             }
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Failed to reset DNS");
+            }
+
         }
 
         /// <summary>
@@ -108,21 +126,30 @@ namespace DNS_changer.ViewModels.Main
         /// </summary>
         public string GetCurrentDNS()
         {
-            NetworkInterface CurrentInterface = GetActiveEthernetOrWifiNetworkInterface();
-            if (CurrentInterface == null) return "";
-
-            IPInterfaceProperties IPProperties = CurrentInterface.GetIPProperties();
-            IPAddressCollection IPCollection = IPProperties.DnsAddresses;
-
-            StringBuilder DNSstring = new StringBuilder();
-            foreach(IPAddress info in IPCollection)
+            try
             {
-                DNSstring.Append($"{info } ");
+                NetworkInterface CurrentInterface = GetActiveEthernetOrWifiNetworkInterface();
+                if (CurrentInterface == null) return "";
+
+                IPInterfaceProperties IPProperties = CurrentInterface.GetIPProperties();
+                IPAddressCollection IPCollection = IPProperties.DnsAddresses;
+
+                StringBuilder DNSstring = new StringBuilder();
+                foreach (IPAddress info in IPCollection)
+                {
+                    DNSstring.Append($"{info } ");
+                }
+                CurrentDNS = DNSstring.ToString();
+
+
+                return IPCollection[0].ToString();
             }
-            CurrentDNS = DNSstring.ToString();
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Failed to get current DNS");
+            }
 
-
-            return IPCollection[0].ToString();
+            return "";
         }
 
         /// <summary>
@@ -130,14 +157,18 @@ namespace DNS_changer.ViewModels.Main
         /// </summary>
         private void CheckIfDNSChanged()
         {
-            string currentDNS = GetCurrentDNS();
-            if (currentDNS == DNSInformation.GoogleDNS[0] || currentDNS == DNSInformation.CloudflareDNS[0])
+            try
             {
-                trayManager.ActivateTray();
+                string currentDNS = GetCurrentDNS();
+
+                if (currentDNS == DNSInformation.GoogleDNS[0] || currentDNS == DNSInformation.CloudflareDNS[0])
+                    trayManager.ActivateTray();
+                else
+                    trayManager.DeactivateTray();
             }
-            else
+            catch(Exception ex)
             {
-                trayManager.DeactivateTray();
+                logger.Error(ex, "Failed to check if DNS is changed");
             }
         }
 
@@ -147,12 +178,20 @@ namespace DNS_changer.ViewModels.Main
         /// <returns>Active Network</returns>
         private static NetworkInterface GetActiveEthernetOrWifiNetworkInterface()
         {
-            NetworkInterface currentNetwork = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(
+            try
+            {
+                NetworkInterface currentNetwork = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(
                 a => a.OperationalStatus == OperationalStatus.Up &&
                 (a.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || a.NetworkInterfaceType == NetworkInterfaceType.Ethernet) &&
                 a.GetIPProperties().GatewayAddresses.Any(g => g.Address.AddressFamily.ToString() == "InterNetwork"));
 
-            return currentNetwork;
+                return currentNetwork;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Failed to get current active network");
+            }
+            return null;
         }
 
         private string _currentDNS;
