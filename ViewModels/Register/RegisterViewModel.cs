@@ -3,6 +3,7 @@ using DNS_changer.Helper;
 using System;
 using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace DNS_changer.ViewModels.Register
@@ -123,12 +124,22 @@ namespace DNS_changer.ViewModels.Register
             catch (Exception ex)
             {
                 logger.Error(ex, "Failed to parse password input");
-                throw;
             }
             
             return false;
         }
 
+        /// <summary>
+        /// Enter key push activates register button
+        /// </summary>
+        /// <param name="e">KeyEventArgs</param>
+        public void EnterButtonRegister(KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                RegisterButton();
+            }
+        }
 
         /// <summary>
         /// Changes bar look

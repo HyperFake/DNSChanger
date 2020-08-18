@@ -5,7 +5,6 @@ using DNS_changer.ViewModels.Register;
 using DNS_changer.ViewModels.Shell;
 using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Windows;
 

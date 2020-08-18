@@ -3,13 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DNS_changer.Views"
-                             xmlns:util="clr-namespace:DNS_changer.Helper"
-
+        xmlns:util="clr-namespace:DNS_changer.Helper"
+        cal:Message.Attach="[Event KeyDown] = [Action EnterButtonRegister($eventArgs)]"
         mc:Ignorable="d"
         xmlns:cal="http://www.caliburnproject.org"
-        Title="DNS Changer" Height="450" Width="800">
-
+        Title="DNS Changer register" Height="450" Width="800">
     <Grid>
         
         <!-- Definitions -->

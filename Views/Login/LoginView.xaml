@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:cal="http://www.caliburnproject.org"
         xmlns:util="clr-namespace:DNS_changer.Helper"
-
+        cal:Message.Attach="[Event KeyDown] = [Action EnterButtonLogin($eventArgs)]"
         mc:Ignorable="d"
-        Title="LoginView" Height="450" Width="800">
+        Title="DNS changer login" Height="450" Width="800">
     <Grid>
         <!-- Definitions -->
         <Grid.ColumnDefinitions>

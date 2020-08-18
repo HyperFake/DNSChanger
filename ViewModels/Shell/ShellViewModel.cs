@@ -83,7 +83,7 @@ namespace DNS_changer.ViewModels.Shell
         /// <summary>
         /// Overrides OnClose to just hide
         /// </summary>
-        /// <param name="e">e</param>
+        /// <param name="e">CancelEventArgs</param>
         public void OnClose(CancelEventArgs e)
         {
             MainWindowVisibility = Visibility.Hidden;
@@ -115,7 +115,7 @@ namespace DNS_changer.ViewModels.Shell
         /// Makes Main Window visible
         /// </summary>
         /// <param name="sender">sender</param>
-        /// <param name="e">e</param>
+        /// <param name="e">EventArgs</param>
         private void ShowMainWindow(object sender, EventArgs e)
         {
             MainWindowVisibility = Visibility.Visible;

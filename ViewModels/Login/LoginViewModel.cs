@@ -2,6 +2,7 @@
 using DNS_changer.Helper;
 using System;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace DNS_changer.ViewModels.Login
 {
@@ -49,6 +50,14 @@ namespace DNS_changer.ViewModels.Login
                 logger.Error(ex, "Login function failed");
             }
 
+        }
+
+        public void EnterButtonLogin(KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                LoginButton();
+            }
         }
 
         /// <summary>
