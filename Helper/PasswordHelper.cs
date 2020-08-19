@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using System.Security.Cryptography;
 
 namespace DNS_changer.Helper
 {
-    public class PasswordHelper
+    public static class PasswordHelper
     {
         /// <summary>
         /// Hashes password string
         /// </summary>
         /// <param name="password">Password string</param>
         /// <returns>hashed password string</returns>
-        public string HashPassword(string password)
+        public static string HashPassword(string password)
         {
             if (string.IsNullOrWhiteSpace(password))
                 return "";
@@ -31,7 +27,7 @@ namespace DNS_changer.Helper
         /// <param name="firstPass">First password</param>
         /// <param name="secondPass">Second password</param>
         /// <returns>true if equals, false otherwise</returns>
-        public bool ComparePasswords(string firstPass, string secondPass)
+        public static bool ComparePasswords(string firstPass, string secondPass)
         {
             if (string.IsNullOrWhiteSpace(firstPass) || string.IsNullOrWhiteSpace(secondPass)) return false;
             if (HashPassword(firstPass).Equals(HashPassword(secondPass)))
@@ -46,7 +42,7 @@ namespace DNS_changer.Helper
         /// </summary>
         /// <param name="newPassword">Password string</param>
         /// <returns>true is equals, false otherwise</returns>
-        public bool ComparePasswordToStored(string newPassword)
+        public static bool ComparePasswordToStored(string newPassword)
         {
             if (string.IsNullOrWhiteSpace(newPassword)) return false;
             if (HashPassword(newPassword).Equals(Properties.Settings.Default.Password))

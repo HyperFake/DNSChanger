@@ -12,11 +12,6 @@ namespace DNS_changer
 {
     public class Bootstrapper : BootstrapperBase
     {
-        // Set saved language before any view appears
-        LanguageHelper lgHelper = new LanguageHelper();
-
-        // Logging
-        Logging logging = new Logging();
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public Bootstrapper()
@@ -32,7 +27,7 @@ namespace DNS_changer
             SetDefaultLanguage();
 
             // Sets logging config
-            logging.SetConfig();
+            Logging.SetConfig();
 
             Initialize();
         }
@@ -45,11 +40,11 @@ namespace DNS_changer
 
             if(string.IsNullOrWhiteSpace(Properties.Settings.Default.Language))
             {
-                lgHelper.SetLanguage("en-US");
+                LanguageHelper.SetLanguage("en-US");
                 return;
             }
 
-            lgHelper.SetLanguage(Properties.Settings.Default.Language);
+            LanguageHelper.SetLanguage(Properties.Settings.Default.Language);
         }
 
         /// <summary>

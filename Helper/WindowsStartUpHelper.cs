@@ -4,20 +4,16 @@ using System.Windows.Forms;
 
 namespace DNS_changer.Helper
 {
-    class WindowsStartUpHelper
+    public static class WindowsStartUpHelper
     {
         // The path to the key where Windows looks for startup applications
-        private readonly RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+        private static readonly RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
-        public WindowsStartUpHelper()
-        {
-
-        }
 
         /// <summary>
         /// Checks registry for DNSChanger value to see if it's enabled
         /// </summary>
-        public bool CheckRegistryState()
+        public static bool CheckRegistryState()
         {
             // Check to see the current state (running at startup or not)
             if (rkApp.GetValue("DNSChanger") != null)
@@ -30,13 +26,13 @@ namespace DNS_changer.Helper
         /// Adds DNSChanger program to windows program start up
         /// </summary>
 
-        public void AddStartUpToRegistry()
+        public static void AddStartUpToRegistry()
         {
             rkApp.SetValue("DNSChanger", Application.ExecutablePath);
 
         }
 
-        public void RemoveStartUpFromRegistry()
+        public static void RemoveStartUpFromRegistry()
         {
             rkApp.DeleteValue("DNSChanger", false);
         }

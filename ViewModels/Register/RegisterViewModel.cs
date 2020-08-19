@@ -14,8 +14,6 @@ namespace DNS_changer.ViewModels.Register
         public delegate void RegisterEventHandler(object sender, EventArgs e);
         public event RegisterEventHandler OnRegisterEvent;
 
-        // language support
-        LanguageHelper lgHelper = new LanguageHelper();
 
         // Logging
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
@@ -35,7 +33,7 @@ namespace DNS_changer.ViewModels.Register
             {
                 if (ParsePasswordInput(PasswordInput))
                 {
-                    string hashedPassword = new PasswordHelper().HashPassword(PasswordInput);
+                    string hashedPassword = PasswordHelper.HashPassword(PasswordInput);
 
                     // Set the password
                     Properties.Settings.Default.Password = hashedPassword;

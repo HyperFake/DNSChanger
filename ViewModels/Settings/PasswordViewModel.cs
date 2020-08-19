@@ -9,12 +9,6 @@ namespace DNS_changer.ViewModels.Settings
 {
     public class PasswordViewModel : Screen
     {
-        // For password comparing & hashing
-        PasswordHelper passwordHelper = new PasswordHelper();
-
-        // Language support
-        LanguageHelper lgHelper = new LanguageHelper();
-
         // Logging
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -28,7 +22,7 @@ namespace DNS_changer.ViewModels.Settings
                 // Check if password meets the requirements and isn't used as current password
                 if (ParsePasswordInput(NewPassword) && PasswordsComparing())
                 {
-                    Properties.Settings.Default.Password = passwordHelper.HashPassword(NewPassword);
+                    Properties.Settings.Default.Password = PasswordHelper.HashPassword(NewPassword);
                     Properties.Settings.Default.Save();
                 }
             }
@@ -62,14 +56,14 @@ namespace DNS_changer.ViewModels.Settings
                 // Password must be atleast 3 symbols
                 if (password.Length <= 3)
                 {
-                    ChangeLook(lgHelper.SavedValue("BarTextShort"), passwordValue, Brushes.Red, Brushes.Black);
+                    ChangeLook(LanguageHelper.SavedValue("BarTextShort"), passwordValue, Brushes.Red, Brushes.Black);
                     ButtonEnabled = false;
                     return false;
                 }
                 // Password must be less than 18 symbols
                 else if (password.Length >= 20)
                 {
-                    ChangeLook(lgHelper.SavedValue("BarTextLong"), passwordValue, Brushes.Red, Brushes.Black);
+                    ChangeLook(LanguageHelper.SavedValue("BarTextLong"), passwordValue, Brushes.Red, Brushes.Black);
                     ButtonEnabled = false;
                     return false;
                 }

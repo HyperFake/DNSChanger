@@ -7,10 +7,6 @@ namespace DNS_changer.ViewModels.Settings
 {
     public class GeneralViewModel : Caliburn.Micro.Screen
     {
-        // Start up helper
-        WindowsStartUpHelper startUpHelper = new WindowsStartUpHelper();
-        // Language helper
-        LanguageHelper lgHelper = new LanguageHelper();
 
         // Start Up item
         ToolStripMenuItem WindowsStartUp = new ToolStripMenuItem();
@@ -23,7 +19,7 @@ namespace DNS_changer.ViewModels.Settings
         /// </summary>
         public GeneralViewModel()
         {
-            StartUpEnabled = startUpHelper.CheckRegistryState();
+            StartUpEnabled = WindowsStartUpHelper.CheckRegistryState();
         }
 
         /// <summary>
@@ -34,10 +30,10 @@ namespace DNS_changer.ViewModels.Settings
             try
             {
                 ToolStripMenuItem languageStripMenu = new ToolStripMenuItem();
-                languageStripMenu.DropDownItems.Add(lgHelper.SavedValue("LanguageEnglishButton"), null, AddEnglishSystemTray);
-                languageStripMenu.DropDownItems.Add(lgHelper.SavedValue("LanguageLithuanianButton"), null, AddLithuanianSystemTray);
+                languageStripMenu.DropDownItems.Add(LanguageHelper.SavedValue("LanguageEnglishButton"), null, AddEnglishSystemTray);
+                languageStripMenu.DropDownItems.Add(LanguageHelper.SavedValue("LanguageLithuanianButton"), null, AddLithuanianSystemTray);
 
-                languageStripMenu.Text = lgHelper.SavedValue("ChangeLanguage");
+                languageStripMenu.Text = LanguageHelper.SavedValue("ChangeLanguage");
 
                 TrayManager.NotifyIcon.ContextMenuStrip.Items.Add(languageStripMenu);
             }
@@ -55,7 +51,7 @@ namespace DNS_changer.ViewModels.Settings
         /// <param name="e">EventArgs</param>
         private void AddEnglishSystemTray(object sender, EventArgs e)
         {
-            lgHelper.SetLanguage("en-US");
+            LanguageHelper.SetLanguage("en-US");
         }
 
         /// <summary>
@@ -65,7 +61,7 @@ namespace DNS_changer.ViewModels.Settings
         /// <param name="e">EventArgs</param>
         private void AddLithuanianSystemTray(object sender, EventArgs e)
         {
-            lgHelper.SetLanguage("lt-LT");
+            LanguageHelper.SetLanguage("lt-LT");
         }
 
         /// <summary>
@@ -76,7 +72,7 @@ namespace DNS_changer.ViewModels.Settings
             try
             {
                 // Setting up System tray item
-                WindowsStartUp.Text = lgHelper.SavedValue("WindowsButton");
+                WindowsStartUp.Text = LanguageHelper.SavedValue("WindowsButton");
                 WindowsStartUp.MouseDown += ToggleStartUpSystemTray;
 
                 if (StartUpEnabled)
@@ -104,13 +100,13 @@ namespace DNS_changer.ViewModels.Settings
             {
                 if (StartUpEnabled)
                 {
-                    startUpHelper.RemoveStartUpFromRegistry();
+                    WindowsStartUpHelper.RemoveStartUpFromRegistry();
                     StartUpEnabled = false;
                     WindowsStartUp.Checked = false;
                 }
                 else
                 {
-                    startUpHelper.AddStartUpToRegistry();
+                    WindowsStartUpHelper.AddStartUpToRegistry();
                     StartUpEnabled = true;
                     WindowsStartUp.Checked = true;
                 }

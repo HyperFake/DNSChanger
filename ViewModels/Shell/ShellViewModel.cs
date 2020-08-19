@@ -13,9 +13,6 @@ namespace DNS_changer.ViewModels.Shell
         // System tray
         static TrayManager trayManager = new TrayManager();
 
-        // Language Helper for multi languages support
-        LanguageHelper lgHelper = new LanguageHelper();
-
         // Views
         MainViewModel mainView = new MainViewModel(trayManager);
         SettingsViewModel settingsView = new SettingsViewModel(trayManager);
@@ -92,7 +89,7 @@ namespace DNS_changer.ViewModels.Shell
 
         private void AddExitAppButton()
         {
-            trayManager.AddItemToContextStripMenu(lgHelper.SavedValue("ExitButton"), null, ExitAppSystemTray);
+            trayManager.AddItemToContextStripMenu(LanguageHelper.SavedValue("ExitButton"), null, ExitAppSystemTray);
         }
 
         /// <summary>
@@ -100,7 +97,7 @@ namespace DNS_changer.ViewModels.Shell
         /// </summary>
         private void AddMainWindowButton()
         {
-            trayManager.AddItemToContextStripMenu(lgHelper.SavedValue("MainButton"), null, ShowMainWindow);
+            trayManager.AddItemToContextStripMenu(LanguageHelper.SavedValue("MainButton"), null, ShowMainWindow);
         }
 
         /// <summary>

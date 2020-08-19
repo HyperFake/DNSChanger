@@ -3,12 +3,12 @@ using System.Globalization;
 
 namespace DNS_changer.Helper
 {
-    public class LanguageHelper
+    public static class LanguageHelper
     {
         // Logging
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public string SavedValue(string valueName)
+        public static string SavedValue(string valueName)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace DNS_changer.Helper
         /// 
         /// </summary>
         /// <param name="language"></param>
-        public void SetLanguage(string language)
+        public static void SetLanguage(string language)
         {
             try
             {
