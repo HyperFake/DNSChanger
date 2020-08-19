@@ -69,6 +69,8 @@ namespace DNS_changer.ViewModels.Login
             PasswordInput = source.Password;
         }
 
+       
+
         private string _passwordInput;
 
         public string PasswordInput

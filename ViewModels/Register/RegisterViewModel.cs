@@ -170,7 +170,7 @@ namespace DNS_changer.ViewModels.Register
         /// </summary>
         private void DefaultLook()
         {
-            ChangeLook(lgHelper.SavedValue("BarDefaultText"), 5, Brushes.LightGray, Brushes.Gray);
+            ChangeLook(lgHelper.SavedValue("BarDefaultText"), 0, Brushes.LightGray, Brushes.Gray);
         }
 
         private string _password;

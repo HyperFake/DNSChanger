@@ -19,9 +19,13 @@ namespace DNS_changer.Views.Login
     /// </summary>
     public partial class LoginView : Window
     {
+        // logging
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         public LoginView()
         {
             InitializeComponent();
         }
+
     }
 }
