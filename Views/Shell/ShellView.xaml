@@ -8,7 +8,10 @@
         xmlns:cal="http://www.caliburnproject.org"
         cal:Message.Attach="[Event Closing] = [Action OnClose($eventArgs)]"
         Visibility="{Binding Path=MainWindowVisibility, Mode=TwoWay}"
-        Title="DNS Changer" Height="450" Width="800">
+        Title="DNS Changer"
+        Height="600" Width="900"
+        MinHeight="600" MinWidth="900"
+        WindowStartupLocation="CenterScreen">
 
     <Grid>
         <!-- Definitions -->

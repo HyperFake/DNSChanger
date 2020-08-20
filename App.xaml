@@ -50,7 +50,6 @@
                         <Setter Property="FontSize" Value="24"/>
                         <Setter Property="SnapsToDevicePixels" Value="True"/>
                     </Style>
-
                 </ResourceDictionary>
             
         </ResourceDictionary.MergedDictionaries>

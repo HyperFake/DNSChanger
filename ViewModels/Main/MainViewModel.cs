@@ -7,6 +7,8 @@ using System.Text;
 using System.Net;
 using System;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace DNS_changer.ViewModels.Main
 {
@@ -176,9 +178,19 @@ namespace DNS_changer.ViewModels.Main
                 string currentDNS = await GetCurrentDNSAsync();
 
                 if (currentDNS == DNSInformation.GoogleDNS[0] || currentDNS == DNSInformation.CloudflareDNS[0])
+                {
+                    CurrentImageString = ImageStrings.DNSEnabledPC;
                     trayManager.ActivateTray();
+                    SuggestionColor = Brushes.Green;
+                    SuggestionText = LanguageHelper.SavedValue("DNSChangedText");
+                }
                 else
+                {
+                    CurrentImageString = ImageStrings.DNSDisabledPC;
                     trayManager.DeactivateTray();
+                    SuggestionColor = Brushes.Red;
+                    SuggestionText = LanguageHelper.SavedValue("DNSNotChangedText");
+                }
             }
             catch (Exception ex)
             {
@@ -219,6 +231,40 @@ namespace DNS_changer.ViewModels.Main
             {
                 _currentDNS = value;
                 NotifyOfPropertyChange(() => CurrentDNS);
+            }
+        }
+
+        private string _currentImageString;
+
+        public string CurrentImageString
+        {
+            get { return _currentImageString; }
+            set
+            {
+                _currentImageString = value;
+                NotifyOfPropertyChange(() => CurrentImageString);
+            }
+        }
+
+        private string _suggestionText;
+        public string SuggestionText
+        {
+            get { return _suggestionText; }
+            set
+            {
+                _suggestionText = value;
+                NotifyOfPropertyChange(() => SuggestionText);
+            }
+        }
+
+        private Brush _suggestionColor;
+        public Brush SuggestionColor
+        {
+            get { return _suggestionColor; }
+            set
+            {
+                _suggestionColor = value;
+                NotifyOfPropertyChange(()=> SuggestionColor);
             }
         }
     }

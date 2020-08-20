@@ -7,8 +7,56 @@
         xmlns:util="clr-namespace:DNS_changer.Helper"
         cal:Message.Attach="[Event KeyDown] = [Action EnterButtonLogin($eventArgs)]"
         mc:Ignorable="d"
-        Height="450" Width="800" Title="DNS Changer"
-        WindowStartupLocation="CenterScreen">
+        Height="600" Width="900" Title="DNS Changer"
+        WindowStartupLocation="CenterScreen"
+        MinHeight="400" MinWidth="400">
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style TargetType="{x:Type Button}" x:Key="LoginButton">
+                <Setter Property="Background" Value="#1a8cff"/>
+                <Setter Property="Foreground" Value="white"/>
+                <Setter Property="FontSize" Value="22"/>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border CornerRadius="8" Background="{TemplateBinding Background}">
+                                <Grid>
+                                    <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#4da6ff"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type PasswordBox}" x:Key="LoginPasswordBox">
+                <Setter Property="BorderBrush" Value="#1a8cff"/>
+                <Setter Property="BorderThickness" Value="2"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type PasswordBox}">
+                            <Border CornerRadius="12" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                                <ScrollViewer x:Name="PART_ContentHost" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type TextBlock}" x:Key="Header">
+                <Setter Property="Foreground" Value="#333"/>
+                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <Grid>
             <!-- Definitions -->
@@ -34,13 +82,14 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
+
             <!-- Main header -->
             <Border Grid.Column="2" Grid.Row="2">
                 <TextBlock x:Name="HeaderText" MinHeight="50" MaxHeight="100" MaxWidth="300" MinWidth="180" Style="{DynamicResource Header}" TextAlignment="Center"  TextWrapping="Wrap" Text="{util:Localization LoginRegisterHeader}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
             </Border>
 
             <!-- Password box -->
-            <PasswordBox x:Name="PasswordInput" Style="{DynamicResource loginRegisterPasswordBox}" Grid.Column="2" Height="40" Width="220" Grid.Row="3" cal:Message.Attach="[Event PasswordChanged] = [Action OnPasswordChanged($source)]" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Foreground="{Binding Path=LoginPasswordTextColor, Mode=OneWay}" />
+            <PasswordBox x:Name="PasswordInput" Style="{DynamicResource LoginPasswordBox}" Grid.Column="2" Height="40" Width="220" Grid.Row="3" cal:Message.Attach="[Event PasswordChanged] = [Action OnPasswordChanged($source)]" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Foreground="{Binding Path=LoginPasswordTextColor, Mode=OneWay}" />
 
             <!-- Error box -->
             <Border Height="30" Width="250" Grid.Column="2" Grid.Row="4">
@@ -48,7 +97,7 @@
             </Border>
 
             <!-- Login button -->
-            <Button x:Name="LoginButton" Content="{util:Localization LoginButton}" Style="{StaticResource loginRegisterButton}" Height="80" Width="200" Grid.Column="2" Grid.Row="5"/>
+            <Button x:Name="LoginButton" Content="{util:Localization LoginButton}" Style="{StaticResource LoginButton}" Height="80" Width="200" Grid.Column="2" Grid.Row="5"/>
         </Grid>
     </ScrollViewer>
 </Window>

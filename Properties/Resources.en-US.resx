@@ -147,6 +147,12 @@
   <data name="ChangePasswordButton" xml:space="preserve">
     <value>Change Password</value>
   </data>
+  <data name="DNSChangedText" xml:space="preserve">
+    <value>DNS is changed</value>
+  </data>
+  <data name="DNSNotChangedText" xml:space="preserve">
+    <value>DNS is not changed!</value>
+  </data>
   <data name="ExitButton" xml:space="preserve">
     <value>Exit app</value>
   </data>
@@ -180,18 +186,11 @@
   <data name="NewPasswordText" xml:space="preserve">
     <value>New password</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="off" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Files\off.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="OldPasswordIncorrect" xml:space="preserve">
     <value>Old password is incorrect</value>
   </data>
   <data name="OldPasswordText" xml:space="preserve">
     <value>Old password</value>
-  </data>
-  <data name="on" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Files\on.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RegisterButton" xml:space="preserve">
     <value>Register</value>

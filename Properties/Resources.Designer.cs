@@ -63,9 +63,9 @@ namespace DNS_changer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        public static System.Drawing.Icon off {
+        public static System.Drawing.Icon systemTrayOff {
             get {
-                object obj = ResourceManager.GetObject("off", resourceCulture);
+                object obj = ResourceManager.GetObject("systemTrayOff", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace DNS_changer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        public static System.Drawing.Icon on {
+        public static System.Drawing.Icon systemTrayOn {
             get {
-                object obj = ResourceManager.GetObject("on", resourceCulture);
+                object obj = ResourceManager.GetObject("systemTrayOn", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

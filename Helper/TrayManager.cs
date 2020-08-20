@@ -21,7 +21,7 @@ namespace DNS_changer.Helper
         {
             NotifyIcon = new NotifyIcon
             {
-                Icon = Properties.Resources.off,
+                Icon = Properties.Resources.systemTrayOff,
                 Visible = true
             };
         }
@@ -70,12 +70,12 @@ namespace DNS_changer.Helper
 
         public void ActivateTray()
         {
-            NotifyIcon.Icon = Properties.Resources.off;
+            NotifyIcon.Icon = Properties.Resources.systemTrayOn;
         }
 
         public void DeactivateTray()
         {
-            NotifyIcon.Icon = Properties.Resources.on;
+            NotifyIcon.Icon = Properties.Resources.systemTrayOff;
         }
 
         public void Dispose()

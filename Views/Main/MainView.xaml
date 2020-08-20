@@ -5,38 +5,112 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
              xmlns:util="clr-namespace:DNS_changer.Helper"
-             d:DesignHeight="450" d:DesignWidth="800" Background="White">
-    <Grid>
-        <!-- Cell Definitions -->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="10*" />
-            <RowDefinition Height="5*" />
-            <RowDefinition Height="10*" />
-            <RowDefinition Height="20" />
-        </Grid.RowDefinitions>
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="White">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button" x:Key="MainButtons">
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="Width" Value="180"/>
+                <Setter Property="Height" Value="60"/>
+                <Setter Property="Background" Value="#1f8ecd"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Grid>
+                                <Border CornerRadius="8" Background="{TemplateBinding Background}">
+                                    <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#176b9b"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#0d3d59"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="Button" x:Key="ResetButton">
+                <Setter Property="Background" Value="#ff0000"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="Height" Value="60"/>
+                <Setter Property="Width" Value="180"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Grid>
+                                <Border CornerRadius="8" Background="{TemplateBinding Background}">
+                                    <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#cc0000"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#990000"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
 
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <!-- Cell Definitions -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <!-- First button -->
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <!-- Gap -->
+                <ColumnDefinition Width="40"/>
+                <!-- Second button -->
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
 
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+                <!-- Image -->
+                <RowDefinition Height="auto" />
+                <!-- Suggestion text-->
+                <RowDefinition Height="auto" />
+                <!-- Google & Cloudflare buttons-->
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="20"/>
+                <!-- Reset button-->
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="20" />
+            </Grid.RowDefinitions>
 
-        <!-- DNS buttons -->
-        <Button x:Name="GoogleDNS" Content="Google DNS" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="3"/>
-        <Button x:Name="CloudflareDNS" Content="Cloudflare DNS" Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="2"/>
-        <Button x:Name="ResetDNS" Content="{util:Localization ResetButton}" Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="3"/>
+            <!-- Image -->
+            <Image x:Name="EnabledImage" SnapsToDevicePixels="True" Source="{Binding Path=CurrentImageString, Mode=OneWay}" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="7" Stretch="Uniform" Width="360" />
 
-        <Label Content="{Binding Path=CurrentDNS, Mode=OneWay}" Grid.Column="3" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="-0.446,-0.856"/>
+            <!-- DNS suggestion label -->
+            <Border Grid.Row="3" Grid.Column="3" SnapsToDevicePixels="True" Grid.ColumnSpan="3" >
+                <TextBlock x:Name="SuggestionText" Foreground="{Binding Path=SuggestionColor, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" Margin="10"/>
+            </Border>
 
-    </Grid>
+            <!-- DNS buttons -->
+            <Button x:Name="GoogleDNS" Style="{DynamicResource MainButtons}" Content="Google DNS" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="4"/>
+            <Button x:Name="CloudflareDNS" Style="{DynamicResource MainButtons}" Content="Cloudflare DNS" Grid.Column="5" Grid.Row="4" Grid.ColumnSpan="2"/>
+            <Button x:Name="ResetDNS" Style="{DynamicResource ResetButton}" Content="{util:Localization ResetButton}" Grid.Column="3" Grid.Row="6" Grid.ColumnSpan="3"/>
+
+        </Grid>
+    </ScrollViewer>
 </UserControl>
