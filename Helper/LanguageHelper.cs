@@ -6,10 +6,12 @@ namespace DNS_changer.Helper
     public static class LanguageHelper
     {
         // Logging
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public static string SavedValue(string valueName)
         {
+            if (valueName is null) SetLanguage("en-US");
+
             try
             {
                 if (Properties.Settings.Default.Language == "lt-LT")
@@ -31,7 +33,7 @@ namespace DNS_changer.Helper
         }
 
         /// <summary>
-        /// 
+        /// Sets the language of the app
         /// </summary>
         /// <param name="language"></param>
         public static void SetLanguage(string language)

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Forms;
+using System.Drawing;
 
 
 namespace DNS_changer.Helper
@@ -25,7 +26,7 @@ namespace DNS_changer.Helper
             };
         }
 
-        public void AddItemToContextStripMenu(string name, System.Drawing.Image Image, EventHandler Event)
+        public void AddItemToContextStripMenu(string name, Image Image = null, EventHandler Event = null)
         {
             if (NotifyIcon.ContextMenuStrip == null)
             {

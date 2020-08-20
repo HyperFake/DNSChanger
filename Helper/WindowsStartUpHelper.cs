@@ -16,10 +16,7 @@ namespace DNS_changer.Helper
         public static bool CheckRegistryState()
         {
             // Check to see the current state (running at startup or not)
-            if (rkApp.GetValue("DNSChanger") != null)
-                return true;
-            else
-                return false;
+            return rkApp.GetValue("DNSChanger") != null;
         }
 
         /// <summary>

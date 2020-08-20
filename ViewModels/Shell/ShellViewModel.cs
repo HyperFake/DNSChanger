@@ -11,11 +11,11 @@ namespace DNS_changer.ViewModels.Shell
     public class ShellViewModel : Conductor<object>
     {
         // System tray
-        static TrayManager trayManager = new TrayManager();
+        static readonly TrayManager trayManager = new TrayManager();
 
         // Views
         MainViewModel mainView = new MainViewModel(trayManager);
-        SettingsViewModel settingsView = new SettingsViewModel(trayManager);
+        readonly SettingsViewModel settingsView = new SettingsViewModel(trayManager);
 
         // Logging
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();

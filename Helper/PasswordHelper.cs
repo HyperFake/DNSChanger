@@ -30,11 +30,8 @@ namespace DNS_changer.Helper
         public static bool ComparePasswords(string firstPass, string secondPass)
         {
             if (string.IsNullOrWhiteSpace(firstPass) || string.IsNullOrWhiteSpace(secondPass)) return false;
-            if (HashPassword(firstPass).Equals(HashPassword(secondPass)))
-                return true;
-            else
-                return false;
 
+            return HashPassword(firstPass).Equals(HashPassword(secondPass));
         }
 
         /// <summary>
@@ -45,10 +42,8 @@ namespace DNS_changer.Helper
         public static bool ComparePasswordToStored(string newPassword)
         {
             if (string.IsNullOrWhiteSpace(newPassword)) return false;
-            if (HashPassword(newPassword).Equals(Properties.Settings.Default.Password))
-                return true;
-            else
-                return false;
+
+            return HashPassword(newPassword).Equals(Properties.Settings.Default.Password);
         }
     }
 
