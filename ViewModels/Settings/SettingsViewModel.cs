@@ -6,8 +6,8 @@ namespace DNS_changer.ViewModels.Settings
     public class SettingsViewModel : Conductor<object>
     {
         // Setting view models
-        GeneralViewModel generalView = new GeneralViewModel();
-        PasswordViewModel passwordView = new PasswordViewModel();
+        readonly GeneralViewModel generalView = new GeneralViewModel();
+        readonly PasswordViewModel passwordView = new PasswordViewModel();
 
         public SettingsViewModel(TrayManager Manager)
         {

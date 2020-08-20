@@ -8,10 +8,10 @@ namespace DNS_changer.ViewModels.Settings
     {
 
         // Start Up item
-        ToolStripMenuItem WindowsStartUp = new ToolStripMenuItem();
+        readonly ToolStripMenuItem WindowsStartUp = new ToolStripMenuItem();
 
         // Logging
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// GeneralViewModel Constructor, checks if DNS changer is enabled at start

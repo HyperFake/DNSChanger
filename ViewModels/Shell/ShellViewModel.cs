@@ -14,11 +14,11 @@ namespace DNS_changer.ViewModels.Shell
         static readonly TrayManager trayManager = new TrayManager();
 
         // Views
-        MainViewModel mainView = new MainViewModel(trayManager);
+        readonly MainViewModel mainView = new MainViewModel(trayManager);
         readonly SettingsViewModel settingsView = new SettingsViewModel(trayManager);
 
         // Logging
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public ShellViewModel()
         {

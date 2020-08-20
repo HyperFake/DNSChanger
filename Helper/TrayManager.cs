@@ -31,9 +31,11 @@ namespace DNS_changer.Helper
             if (NotifyIcon.ContextMenuStrip == null)
             {
                 // As this is first item, we have to create menu to hold it
-                ContextMenuStrip newMenu = new ContextMenuStrip();
-                // Make items checked status visible
-                newMenu.ShowCheckMargin = true;
+                ContextMenuStrip newMenu = new ContextMenuStrip
+                {
+                    // Make items checked status visible
+                    ShowCheckMargin = true
+                };
 
                 NotifyIcon.ContextMenuStrip = newMenu;
             }

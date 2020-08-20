@@ -2,6 +2,7 @@
 using DNS_changer.Helper;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -16,7 +17,7 @@ namespace DNS_changer.ViewModels.Register
 
 
         // Logging
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public RegisterViewModel()
         {
@@ -27,29 +28,52 @@ namespace DNS_changer.ViewModels.Register
         /// <summary>
         /// Checks password input and stores it if met parameters
         /// </summary>
-        public void RegisterButton()
+        public async void RegisterButton()
         {
+            bool result = await RegisterAsync();
+
             try
             {
-                if (ParsePasswordInput(PasswordInput))
+                if (result)
                 {
-                    string hashedPassword = PasswordHelper.HashPassword(PasswordInput);
-
-                    // Set the password
-                    Properties.Settings.Default.Password = hashedPassword;
-                    Properties.Settings.Default.Save();
-
                     // Change the window
                     if (OnRegisterEvent == null) return;
-                    EventArgs args = new EventArgs();
-                    OnRegisterEvent(this, args);
+                    OnRegisterEvent(this, new EventArgs());
                 }
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Failed to register");
+                logger.Error(ex, "Register function failed");
             }
+        }
 
+        /// <summary>
+        /// Register Async function. Parses password input and saves password value to Properties
+        /// </summary>
+        /// <returns>true if password can be parsed, false otherwise</returns>
+        public async Task<bool> RegisterAsync()
+        {
+            bool resultTemp = false;
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (ParsePasswordInput(PasswordInput))
+                    {
+                        resultTemp = true;
+                        string hashedPassword = PasswordHelper.HashPassword(PasswordInput);
+
+                        // Set the password
+                        Properties.Settings.Default.Password = hashedPassword;
+                        Properties.Settings.Default.Save();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex, "RegisterAsync failed");
+                }
+            });
+            return resultTemp;
         }
 
         /// <summary>

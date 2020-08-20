@@ -1,6 +1,8 @@
 ﻿using Caliburn.Micro;
 using DNS_changer.Helper;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -13,31 +15,24 @@ namespace DNS_changer.ViewModels.Login
         public event LoginEventHandler OnLoginEvent;
 
         // Logging
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Login button function, compares passwords and activates login event if success
         /// </summary>
-        public void LoginButton()
+        public async void LoginButton()
         {
+            // Reset login text 
+            LoginErrorText = "";
+
+            bool result = await LoginAsync();
+
             try
             {
-                if (string.IsNullOrWhiteSpace(PasswordInput))
-                {
-                    LoginErrorText = LanguageHelper.SavedValue("LoginRegisterEmpty");
-                    return;
-                }
-
-                if (PasswordHelper.ComparePasswordToStored(PasswordInput))
+                if (result)
                 {
                     if (OnLoginEvent == null) return;
-
-                    EventArgs args = new EventArgs();
-                    OnLoginEvent(this, args);
-                }
-                else
-                {
-                    LoginErrorText = LanguageHelper.SavedValue("LoginErrorText");
+                    OnLoginEvent(this, new EventArgs());
                 }
             }
             catch (Exception ex)
@@ -45,6 +40,44 @@ namespace DNS_changer.ViewModels.Login
                 logger.Error(ex, "Login function failed");
             }
 
+        }
+
+        /// <summary>
+        /// Login async function. Checks if password input is not empty and is equal to saved
+        /// </summary>
+        /// <returns>true if it's saved password, false otherwise</returns>
+        private async Task<bool> LoginAsync()
+        {
+
+            bool tempResult = false;
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(PasswordInput))
+                    {
+                        LoginErrorText = LanguageHelper.SavedValue("LoginRegisterEmpty");
+                        tempResult = false;
+                    }
+
+                    if (PasswordHelper.ComparePasswordToStored(PasswordInput))
+                    {
+                        tempResult = true;
+                    }
+                    else
+                    {
+                        LoginErrorText = LanguageHelper.SavedValue("LoginErrorText");
+                        tempResult = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex, "LoginAsync function failed");
+                    tempResult = false;
+                }
+            });
+
+            return tempResult;
         }
 
         public void EnterButtonLogin(KeyEventArgs e)

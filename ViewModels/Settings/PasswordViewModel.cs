@@ -10,7 +10,7 @@ namespace DNS_changer.ViewModels.Settings
     public class PasswordViewModel : Screen
     {
         // Logging
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Changes password if parameters meet

@@ -12,7 +12,7 @@ namespace DNS_changer
 {
     public class Bootstrapper : BootstrapperBase
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public Bootstrapper()
         {

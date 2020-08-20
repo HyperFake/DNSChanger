@@ -51,9 +51,6 @@
                         <Setter Property="SnapsToDevicePixels" Value="True"/>
                     </Style>
 
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="SnapsToDevicePixels" Value="True"/>
-                    </Style>
                 </ResourceDictionary>
             
         </ResourceDictionary.MergedDictionaries>
