@@ -26,7 +26,7 @@ namespace DNS_changer.ViewModels.Settings
                     Properties.Settings.Default.Save();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Failed to change the password");
             }
@@ -81,26 +81,26 @@ namespace DNS_changer.ViewModels.Settings
                 // Weak password
                 if (passwordValue <= 30)
                 {
-                    ChangeLook(lgHelper.SavedValue("BarTextWeak"), passwordValue, Brushes.Red, Brushes.Black);
+                    ChangeLook(LanguageHelper.SavedValue("BarTextWeak"), passwordValue, Brushes.Red, Brushes.Black);
                     return true;
                 }
                 else if (passwordValue > 30 && passwordValue <= 60)
                 {
-                    ChangeLook(lgHelper.SavedValue("BarTextMedium"), passwordValue, Brushes.Yellow, Brushes.Black);
+                    ChangeLook(LanguageHelper.SavedValue("BarTextMedium"), passwordValue, Brushes.Yellow, Brushes.Black);
                     return true;
                 }
                 else if (passwordValue > 60 && passwordValue <= 85)
                 {
-                    ChangeLook(lgHelper.SavedValue("BarTextGood"), passwordValue, Brushes.LightGreen, Brushes.Black);
+                    ChangeLook(LanguageHelper.SavedValue("BarTextGood"), passwordValue, Brushes.LightGreen, Brushes.Black);
                     return true;
                 }
                 else if (passwordValue > 85)
                 {
-                    ChangeLook(lgHelper.SavedValue("BarTextVGood"), passwordValue, Brushes.Green, Brushes.Black);
+                    ChangeLook(LanguageHelper.SavedValue("BarTextVGood"), passwordValue, Brushes.Green, Brushes.Black);
                     return true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Failed to parse the password input (Password Change View)");
             }
@@ -113,7 +113,7 @@ namespace DNS_changer.ViewModels.Settings
         /// </summary>
         private void DefaultLook()
         {
-            ChangeLook(lgHelper.SavedValue("BarDefaultText"), 5, Brushes.LightGray, Brushes.Gray);
+            ChangeLook(LanguageHelper.SavedValue("BarDefaultText"), 5, Brushes.LightGray, Brushes.Gray);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace DNS_changer.ViewModels.Settings
                 BarColor = barColor;
                 BarTextColor = barTextColor;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Failed to change look (Password change view)");
             }
@@ -147,23 +147,23 @@ namespace DNS_changer.ViewModels.Settings
         {
             try
             {
-                if (!passwordHelper.ComparePasswordToStored(OldPassword))
+                if (!PasswordHelper.ComparePasswordToStored(OldPassword))
                 {
-                    ErrorText = lgHelper.SavedValue("OldPasswordIncorrect");
+                    ErrorText = LanguageHelper.SavedValue("OldPasswordIncorrect");
                     return false;
                 }
                 else if (!NewPassword.Equals(RepeatPassword))
                 {
-                    ErrorText = lgHelper.SavedValue("NewPasswordNoMatch");
+                    ErrorText = LanguageHelper.SavedValue("NewPasswordNoMatch");
                     return false;
                 }
-                else if (passwordHelper.ComparePasswordToStored(NewPassword))
+                else if (PasswordHelper.ComparePasswordToStored(NewPassword))
                 {
-                    ErrorText = lgHelper.SavedValue("NewPasswordOldValue");
+                    ErrorText = LanguageHelper.SavedValue("NewPasswordOldValue");
                     return false;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Failed to compare passwords (Password change view)");
             }

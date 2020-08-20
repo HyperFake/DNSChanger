@@ -11,44 +11,44 @@
         WindowStartupLocation="CenterScreen">
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <Grid>
-        <!-- Definitions -->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
-            <!-- Main column -->
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="20"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="*"/>
-            <!-- Header text row -->
-            <RowDefinition Height="auto"/>
-            <!-- Input row-->
-            <RowDefinition Height="auto"/>
-            <!-- Error row-->
-            <RowDefinition Height="auto"/>
-            <!-- Button row -->
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="20"/>
-        </Grid.RowDefinitions>
+            <!-- Definitions -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <!-- Main column -->
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+                <!-- Header text row -->
+                <RowDefinition Height="auto"/>
+                <!-- Input row-->
+                <RowDefinition Height="auto"/>
+                <!-- Error row-->
+                <RowDefinition Height="auto"/>
+                <!-- Button row -->
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
             <!-- Main header -->
-        <Border Grid.Column="2" Grid.Row="2">
-            <TextBlock x:Name="HeaderText" MinHeight="50" MaxHeight="100" MaxWidth="300" MinWidth="180" Style="{DynamicResource Header}" TextAlignment="Center"  TextWrapping="Wrap" Text="{util:Localization LoginRegisterHeader}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-        </Border>
+            <Border Grid.Column="2" Grid.Row="2">
+                <TextBlock x:Name="HeaderText" MinHeight="50" MaxHeight="100" MaxWidth="300" MinWidth="180" Style="{DynamicResource Header}" TextAlignment="Center"  TextWrapping="Wrap" Text="{util:Localization LoginRegisterHeader}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+            </Border>
 
-        <!-- Password box -->
-        <PasswordBox x:Name="PasswordInput" Style="{DynamicResource loginRegisterPasswordBox}" Grid.Column="2" Height="40" Width="220" Grid.Row="3" cal:Message.Attach="[Event PasswordChanged] = [Action OnPasswordChanged($source)]" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Foreground="{Binding Path=LoginPasswordTextColor, Mode=OneWay}" />
+            <!-- Password box -->
+            <PasswordBox x:Name="PasswordInput" Style="{DynamicResource loginRegisterPasswordBox}" Grid.Column="2" Height="40" Width="220" Grid.Row="3" cal:Message.Attach="[Event PasswordChanged] = [Action OnPasswordChanged($source)]" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Foreground="{Binding Path=LoginPasswordTextColor, Mode=OneWay}" />
 
-        <!-- Error box -->
-        <Border Height="30" Width="250" Grid.Column="2" Grid.Row="4">
-            <TextBlock x:Name="ErrorText" Text="{Binding Path=LoginErrorText, Mode=OneWay}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="Red"/>
-        </Border>
+            <!-- Error box -->
+            <Border Height="30" Width="250" Grid.Column="2" Grid.Row="4">
+                <TextBlock x:Name="ErrorText" Text="{Binding Path=LoginErrorText, Mode=OneWay}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="Red"/>
+            </Border>
 
-        <!-- Login button -->
-        <Button x:Name="LoginButton" Content="{util:Localization LoginButton}" Style="{StaticResource loginRegisterButton}" Height="80" Width="200" Grid.Column="2" Grid.Row="5"/>
-    </Grid>
+            <!-- Login button -->
+            <Button x:Name="LoginButton" Content="{util:Localization LoginButton}" Style="{StaticResource loginRegisterButton}" Height="80" Width="200" Grid.Column="2" Grid.Row="5"/>
+        </Grid>
     </ScrollViewer>
 </Window>

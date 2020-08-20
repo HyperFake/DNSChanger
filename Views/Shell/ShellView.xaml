@@ -9,7 +9,7 @@
         cal:Message.Attach="[Event Closing] = [Action OnClose($eventArgs)]"
         Visibility="{Binding Path=MainWindowVisibility, Mode=TwoWay}"
         Title="DNS Changer" Height="450" Width="800">
-        
+
     <Grid>
         <!-- Definitions -->
         <Grid.ColumnDefinitions>
@@ -26,12 +26,12 @@
             <RowDefinition Height="85*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        
+
         <!-- Navigation -->
         <Button x:Name="LoadMainView" Content="{util:Localization MainButton}" Grid.Column="1" Grid.Row="1"/>
         <Button x:Name="LoadSettingsView" Content="{util:Localization SettingsButton}" Grid.Column="3" Grid.Row="1"/>
         <Button x:Name="ExitApp" Content="{util:Localization ExitButton}" Grid.Column="4" Grid.Row="1"/>
-        
+
         <!-- Content -->
         <ContentControl x:Name="ActiveItem" Content="ContentControl" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="4"/>
 

@@ -28,14 +28,14 @@
             <RowDefinition Height="10*" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
-        
-        
-        
+
+
+
         <!-- DNS buttons -->
         <Button x:Name="GoogleDNS" Content="Google DNS" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="3"/>
         <Button x:Name="CloudflareDNS" Content="Cloudflare DNS" Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="2"/>
         <Button x:Name="ResetDNS" Content="{util:Localization ResetButton}" Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="3"/>
-        
+
         <Label Content="{Binding Path=CurrentDNS, Mode=OneWay}" Grid.Column="3" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="-0.446,-0.856"/>
 
     </Grid>

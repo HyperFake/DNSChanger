@@ -12,9 +12,6 @@ namespace DNS_changer.ViewModels.Login
         public delegate void LoginEventHandler(object sender, EventArgs e);
         public event LoginEventHandler OnLoginEvent;
 
-        // Language helper for different language support
-        LanguageHelper lgHelper = new LanguageHelper();
-
         // Logging
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -27,13 +24,11 @@ namespace DNS_changer.ViewModels.Login
             {
                 if (string.IsNullOrWhiteSpace(PasswordInput))
                 {
-                    LoginErrorText = lgHelper.SavedValue("LoginRegisterEmpty");
+                    LoginErrorText = LanguageHelper.SavedValue("LoginRegisterEmpty");
                     return;
                 }
 
-                PasswordHelper passwordHelper = new PasswordHelper();
-
-                if (passwordHelper.ComparePasswordToStored(PasswordInput))
+                if (PasswordHelper.ComparePasswordToStored(PasswordInput))
                 {
                     if (OnLoginEvent == null) return;
 
@@ -42,10 +37,10 @@ namespace DNS_changer.ViewModels.Login
                 }
                 else
                 {
-                    LoginErrorText = lgHelper.SavedValue("LoginErrorText");
+                    LoginErrorText = LanguageHelper.SavedValue("LoginErrorText");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Login function failed");
             }
@@ -54,7 +49,7 @@ namespace DNS_changer.ViewModels.Login
 
         public void EnterButtonLogin(KeyEventArgs e)
         {
-            if(e.Key == Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 LoginButton();
             }
@@ -69,7 +64,7 @@ namespace DNS_changer.ViewModels.Login
             PasswordInput = source.Password;
         }
 
-       
+
 
         private string _passwordInput;
 

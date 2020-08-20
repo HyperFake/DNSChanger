@@ -44,7 +44,7 @@ namespace DNS_changer.Helper
                 Properties.Settings.Default.Language = language;
                 Properties.Settings.Default.Save();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Failed to set new language");
             }

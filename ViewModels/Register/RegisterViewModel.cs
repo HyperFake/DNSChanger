@@ -45,7 +45,7 @@ namespace DNS_changer.ViewModels.Register
                     OnRegisterEvent(this, args);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Failed to register");
             }
@@ -75,14 +75,14 @@ namespace DNS_changer.ViewModels.Register
                 // Password must be atleast 3 symbols
                 if (password.Length <= 3)
                 {
-                    ChangeLook(lgHelper.SavedValue("BarTextShort"), passwordValue, Brushes.Red, Brushes.Black);
+                    ChangeLook(LanguageHelper.SavedValue("BarTextShort"), passwordValue, Brushes.Red, Brushes.Black);
                     ButtonEnabled = false;
                     return false;
                 }
                 // Password must be less than 18 symbols
                 if (password.Length >= 20)
                 {
-                    ChangeLook(lgHelper.SavedValue("BarTextLong"), passwordValue, Brushes.Red, Brushes.Black);
+                    ChangeLook(LanguageHelper.SavedValue("BarTextLong"), passwordValue, Brushes.Red, Brushes.Black);
                     ButtonEnabled = false;
                     return false;
                 }
@@ -100,22 +100,22 @@ namespace DNS_changer.ViewModels.Register
                 // Weak password
                 if (passwordValue <= 30)
                 {
-                    ChangeLook(lgHelper.SavedValue("BarTextWeak"), passwordValue, Brushes.Red, Brushes.Black);
+                    ChangeLook(LanguageHelper.SavedValue("BarTextWeak"), passwordValue, Brushes.Red, Brushes.Black);
                     return true;
                 }
                 else if (passwordValue > 30 && passwordValue <= 60)
                 {
-                    ChangeLook(lgHelper.SavedValue("BarTextMedium"), passwordValue, Brushes.Yellow, Brushes.Black);
+                    ChangeLook(LanguageHelper.SavedValue("BarTextMedium"), passwordValue, Brushes.Yellow, Brushes.Black);
                     return true;
                 }
                 else if (passwordValue > 60 && passwordValue <= 85)
                 {
-                    ChangeLook(lgHelper.SavedValue("BarTextGood"), passwordValue, Brushes.LightGreen, Brushes.Black);
+                    ChangeLook(LanguageHelper.SavedValue("BarTextGood"), passwordValue, Brushes.LightGreen, Brushes.Black);
                     return true;
                 }
                 else if (passwordValue > 85)
                 {
-                    ChangeLook(lgHelper.SavedValue("BarTextVGood"), passwordValue, Brushes.Green, Brushes.Black);
+                    ChangeLook(LanguageHelper.SavedValue("BarTextVGood"), passwordValue, Brushes.Green, Brushes.Black);
                     return true;
                 }
             }
@@ -123,7 +123,7 @@ namespace DNS_changer.ViewModels.Register
             {
                 logger.Error(ex, "Failed to parse password input");
             }
-            
+
             return false;
         }
 
@@ -168,7 +168,7 @@ namespace DNS_changer.ViewModels.Register
         /// </summary>
         private void DefaultLook()
         {
-            ChangeLook(lgHelper.SavedValue("BarDefaultText"), 0, Brushes.LightGray, Brushes.Gray);
+            ChangeLook(LanguageHelper.SavedValue("BarDefaultText"), 0, Brushes.LightGray, Brushes.Gray);
         }
 
         private string _password;

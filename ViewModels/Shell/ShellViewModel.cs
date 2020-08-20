@@ -105,7 +105,7 @@ namespace DNS_changer.ViewModels.Shell
         /// </summary>
         private void AttachShowWindow()
         {
-                trayManager.NotifyIcon.DoubleClick += ShowMainWindow;
+            trayManager.NotifyIcon.DoubleClick += ShowMainWindow;
         }
 
         /// <summary>

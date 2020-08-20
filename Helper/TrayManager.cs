@@ -27,7 +27,7 @@ namespace DNS_changer.Helper
 
         public void AddItemToContextStripMenu(string name, System.Drawing.Image Image, EventHandler Event)
         {
-            if(NotifyIcon.ContextMenuStrip == null)
+            if (NotifyIcon.ContextMenuStrip == null)
             {
                 // As this is first item, we have to create menu to hold it
                 ContextMenuStrip newMenu = new ContextMenuStrip();

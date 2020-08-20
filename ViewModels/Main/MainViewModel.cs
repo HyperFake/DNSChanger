@@ -80,7 +80,7 @@ namespace DNS_changer.ViewModels.Main
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Failed to set DNS");
             }
@@ -114,7 +114,7 @@ namespace DNS_changer.ViewModels.Main
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Failed to reset DNS");
             }
@@ -144,7 +144,7 @@ namespace DNS_changer.ViewModels.Main
 
                 return IPCollection[0].ToString();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Failed to get current DNS");
             }
@@ -166,7 +166,7 @@ namespace DNS_changer.ViewModels.Main
                 else
                     trayManager.DeactivateTray();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Failed to check if DNS is changed");
             }

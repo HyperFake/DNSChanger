@@ -1,6 +1,5 @@
 ﻿using DNS_changer.Helper;
 using System;
-using System.Globalization;
 using System.Windows.Forms;
 
 namespace DNS_changer.ViewModels.Settings
@@ -37,7 +36,7 @@ namespace DNS_changer.ViewModels.Settings
 
                 TrayManager.NotifyIcon.ContextMenuStrip.Items.Add(languageStripMenu);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Failed to add language button to system tray.");
             }
@@ -83,7 +82,7 @@ namespace DNS_changer.ViewModels.Settings
                 // Adding it
                 TrayManager.NotifyIcon.ContextMenuStrip.Items.Add(WindowsStartUp);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Failed to add windows start up toggle to system tray");
             }
@@ -111,7 +110,7 @@ namespace DNS_changer.ViewModels.Settings
                     WindowsStartUp.Checked = true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Failed to toggle windows start up");
             }

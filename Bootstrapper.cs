@@ -17,7 +17,7 @@ namespace DNS_changer
         public Bootstrapper()
         {
             // Gets current process name
-            String DNSChangerName = Process.GetCurrentProcess().ProcessName;
+            string DNSChangerName = Process.GetCurrentProcess().ProcessName;
 
             // Prevents opening more than 1 application
             if (Process.GetProcesses().Count(p => p.ProcessName == DNSChangerName) > 1)
@@ -38,7 +38,7 @@ namespace DNS_changer
         private void SetDefaultLanguage()
         {
 
-            if(string.IsNullOrWhiteSpace(Properties.Settings.Default.Language))
+            if (string.IsNullOrWhiteSpace(Properties.Settings.Default.Language))
             {
                 LanguageHelper.SetLanguage("en-US");
                 return;
@@ -99,7 +99,7 @@ namespace DNS_changer
 
                 windowManager.ShowDialog(shellViewModel, null, null);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Failed to close Login window");
             }
@@ -124,7 +124,7 @@ namespace DNS_changer
 
                 windowManager.ShowDialog(shellViewModel, null, null);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex, "Failed to close Register window");
             }

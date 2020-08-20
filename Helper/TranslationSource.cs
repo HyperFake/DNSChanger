@@ -27,7 +27,7 @@ namespace DNS_changer.Helper
             get { return currentCulture; }
             set
             {
-                if(currentCulture != value)
+                if (currentCulture != value)
                 {
                     currentCulture = value;
                     var @event = PropertyChanged;
