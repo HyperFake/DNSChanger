@@ -62,6 +62,12 @@
                 </Setter>
 
             </Style>
+            <Style x:Key="MainTextBlock" TargetType="TextBlock">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Margin" Value="10"/>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
@@ -103,7 +109,7 @@
 
             <!-- DNS suggestion label -->
             <Border Grid.Row="3" Grid.Column="3" SnapsToDevicePixels="True" Grid.ColumnSpan="3" >
-                <TextBlock x:Name="SuggestionText" Foreground="{Binding Path=SuggestionColor, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" Margin="10"/>
+                <TextBlock x:Name="SuggestionText" Style="{DynamicResource MainTextBlock}" Foreground="{Binding Path=SuggestionColor, Mode=OneWay}"/>
             </Border>
 
             <!-- DNS buttons -->

@@ -45,11 +45,6 @@
                             </Setter.Value>
                         </Setter>
                     </Style>
-                    <Style TargetType="{x:Type TextBlock}" x:Key="Header">
-                        <Setter Property="Foreground" Value="#333"/>
-                        <Setter Property="FontSize" Value="24"/>
-                        <Setter Property="SnapsToDevicePixels" Value="True"/>
-                    </Style>
                 </ResourceDictionary>
             
         </ResourceDictionary.MergedDictionaries>

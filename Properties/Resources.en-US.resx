@@ -141,6 +141,12 @@
   <data name="BarTextWeak" xml:space="preserve">
     <value>Weak</value>
   </data>
+  <data name="ButtonStateOff" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="ButtonStateOn" xml:space="preserve">
+    <value>On</value>
+  </data>
   <data name="ChangeLanguage" xml:space="preserve">
     <value>Change Language</value>
   </data>
@@ -162,6 +168,9 @@
   <data name="LanguageLithuanianButton" xml:space="preserve">
     <value>Lithuanian</value>
   </data>
+  <data name="LanguageSelectionText" xml:space="preserve">
+    <value>Language selection</value>
+  </data>
   <data name="LoginButton" xml:space="preserve">
     <value>Login</value>
   </data>
@@ -178,7 +187,7 @@
     <value>DNS Changer</value>
   </data>
   <data name="NewPasswordNoMatch" xml:space="preserve">
-    <value>New passwords doesn't match</value>
+    <value>New passwords do not match</value>
   </data>
   <data name="NewPasswordOldValue" xml:space="preserve">
     <value>New password cannot match old one</value>
@@ -191,6 +200,9 @@
   </data>
   <data name="OldPasswordText" xml:space="preserve">
     <value>Old password</value>
+  </data>
+  <data name="PasswordTip" xml:space="preserve">
+    <value>Don't forget to change your password often to keep your account safe.</value>
   </data>
   <data name="RegisterButton" xml:space="preserve">
     <value>Register</value>
@@ -212,5 +224,8 @@
   </data>
   <data name="WindowsButton" xml:space="preserve">
     <value>Windows Startup</value>
+  </data>
+  <data name="WindowsStartUpHeader" xml:space="preserve">
+    <value>Start application at windows start up</value>
   </data>
 </root>

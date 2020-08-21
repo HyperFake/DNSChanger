@@ -9,34 +9,133 @@
         cal:Message.Attach="[Event Closing] = [Action OnClose($eventArgs)]"
         Visibility="{Binding Path=MainWindowVisibility, Mode=TwoWay}"
         Title="DNS Changer"
-        Height="600" Width="900"
-        MinHeight="600" MinWidth="900"
+        Height="720" Width="1280"
+        MinHeight="400" MinWidth="400"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Image x:Key="ExitImage" Height="25" Source="..\..\Files\exitIcon.png"/>
+        <Style TargetType="Button" x:Key="ExitButton">
+            <Setter Property="Background" Value="#ff0000"/>
+            <Setter Property="BorderBrush" Value="#ff0000"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border CornerRadius="50" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                <ContentPresenter Content="{TemplateBinding Content}"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#b30000"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#990000"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Image x:Key="SettingsImage" Source="..\..\Files\settingsButton.png" Height="25"/>
+        <Style TargetType="Button" x:Key="SettingsButton">
+            <Setter Property="Background" Value="#1a8cff"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="BorderBrush" Value="#1a8cff"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border CornerRadius="50" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter Content="{TemplateBinding Content}"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#0073e6"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#0059b3"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="MainButton" TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="BorderBrush" Value="#1a8cff"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border CornerRadius="20" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#cce6ff"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#80bfff"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+    </Window.Resources>
 
     <Grid>
         <!-- Definitions -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="15*"/>
-            <ColumnDefinition Width="60*"/>
-            <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="0"/>
+            <!-- Main button -->
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <!-- Settings button -->
+            <ColumnDefinition Width="auto"/>
+            <!-- Shut down button-->
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="85*"/>
+            <RowDefinition Height="10"/>
+            <!-- Button row -->
+            <RowDefinition Height="auto"/>
+            <!-- Content -->
+            <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
-        <!-- Navigation -->
-        <Button x:Name="LoadMainView" Content="{util:Localization MainButton}" Grid.Column="1" Grid.Row="1"/>
-        <Button x:Name="LoadSettingsView" Content="{util:Localization SettingsButton}" Grid.Column="3" Grid.Row="1"/>
-        <Button x:Name="ExitApp" Content="{util:Localization ExitButton}" Grid.Column="4" Grid.Row="1"/>
+        <!-- Main button -->
+        <Button x:Name="LoadMainView" Margin="20 0 0 0" Style="{DynamicResource MainButton}" Grid.Column="1" Grid.Row="1">
+            <DockPanel LastChildFill="True">
+                <Image Margin="7 0 0 0" Source="..\..\Files\homeButton.png" Height="20" Width="20"/>
+                <TextBlock Margin="7 0 7 0" Text="{util:Localization MainButton}"/>
+            </DockPanel>
+        </Button>
+
+        <!-- Settings button -->
+        <Button x:Name="LoadSettingsView" Style="{DynamicResource SettingsButton}" Content="{StaticResource SettingsImage}" Grid.Column="3" Grid.Row="1"/>
+
+        <!-- Exit app button-->
+        <Button x:Name="ExitApp" Foreground="White" Style="{StaticResource ExitButton}" Content="{StaticResource ExitImage}"  Grid.Column="4" Grid.Row="1" Margin="15 0 0 0"/>
 
         <!-- Content -->
-        <ContentControl x:Name="ActiveItem" Content="ContentControl" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="4"/>
+        <ContentControl x:Name="ActiveItem" SnapsToDevicePixels="True" Content="ContentControl" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="4"/>
 
     </Grid>
 </Window>

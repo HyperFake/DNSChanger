@@ -99,7 +99,7 @@
             <!-- Password bar -->
             <ProgressBar x:Name="StrengthBar" Grid.Column="2" Grid.Row="6" Minimum="0" Maximum="100" Value="{Binding Path=BarValue, Mode=OneWay}" Foreground="{Binding Path=BarColor, Mode=OneWay}" Width="250" Height="30" SnapsToDevicePixels="True"/>
             <!-- Password text -->
-            <TextBlock x:Name="BarText" Margin="20 0 0 0" Width="250" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="6" VerticalAlignment="Center" Text="{Binding Path=BarText, Mode=OneWay}" Foreground="{Binding Path=BarTextColor, Mode=OneWay}"  TextWrapping="Wrap" FontSize="16"/>
+            <TextBlock x:Name="BarText" Margin="20 0 0 0" Height="25" Width="250" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="6" VerticalAlignment="Center" Text="{Binding Path=BarText, Mode=OneWay}" Foreground="{Binding Path=BarTextColor, Mode=OneWay}"  TextWrapping="Wrap" FontSize="16"/>
 
             <!-- Register button-->
             <Button x:Name="RegisterButton" Style="{DynamicResource RegisterButton}" Content="{util:Localization RegisterButton}" Grid.Column="2" Grid.Row="8" IsEnabled="{Binding Path=ButtonEnabled, Mode=OneWay}" Height="80" Width="200"/>

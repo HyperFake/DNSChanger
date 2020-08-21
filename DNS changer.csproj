@@ -106,6 +106,7 @@
     <Compile Include="Helper\DNSInformation.cs" />
     <Compile Include="Helper\ImageStrings.cs" />
     <Compile Include="Helper\LanguageHelper.cs" />
+    <Compile Include="Helper\LanguageStrings.cs" />
     <Compile Include="Helper\LocalizationExtension.cs" />
     <Compile Include="Helper\Logging.cs" />
     <Compile Include="Helper\PasswordHelper.cs" />
@@ -256,7 +257,16 @@
     <Resource Include="Files\systemTrayOnpng.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Files\shutdownIcon.png" />
+    <Resource Include="Files\exitIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Files\settingsButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Files\homeButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Files\settingsPcGuy.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

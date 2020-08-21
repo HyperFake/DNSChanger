@@ -33,6 +33,15 @@ namespace DNS_changer.ViewModels.Settings
 
         }
 
+        private void ButtonStateHandler()
+        {
+            if (!string.IsNullOrWhiteSpace(NewPassword) && NewPassword.Length > 3 && NewPassword.Length < 18 &&
+                !string.IsNullOrWhiteSpace(RepeatPassword) && RepeatPassword.Length > 3 && RepeatPassword.Length < 18)
+                ButtonEnabled = true;
+            else
+                ButtonEnabled = false;
+        }
+
         /// <summary>
         /// Parses password input and represents it's strength accordingly
         /// </summary>
@@ -46,7 +55,6 @@ namespace DNS_changer.ViewModels.Settings
                 if (string.IsNullOrWhiteSpace(password))
                 {
                     DefaultLook();
-                    ButtonEnabled = false;
                     return false;
                 }
 
@@ -57,19 +65,14 @@ namespace DNS_changer.ViewModels.Settings
                 if (password.Length <= 3)
                 {
                     ChangeLook(LanguageHelper.SavedValue("BarTextShort"), passwordValue, Brushes.Red, Brushes.Black);
-                    ButtonEnabled = false;
                     return false;
                 }
                 // Password must be less than 18 symbols
                 else if (password.Length >= 20)
                 {
                     ChangeLook(LanguageHelper.SavedValue("BarTextLong"), passwordValue, Brushes.Red, Brushes.Black);
-                    ButtonEnabled = false;
                     return false;
                 }
-
-                // Enable register button as it meets standarts
-                ButtonEnabled = true;
 
 
                 // Calculate additional password strength
@@ -205,6 +208,7 @@ namespace DNS_changer.ViewModels.Settings
             get { return _oldPassword; }
             set
             {
+                
                 _oldPassword = value;
                 NotifyOfPropertyChange(() => OldPassword);
             }
@@ -218,6 +222,7 @@ namespace DNS_changer.ViewModels.Settings
             {
                 _newPassword = value;
                 ParsePasswordInput(value);
+                ButtonStateHandler();
                 NotifyOfPropertyChange(() => NewPassword);
             }
         }
@@ -229,6 +234,7 @@ namespace DNS_changer.ViewModels.Settings
             set
             {
                 _repeatPassword = value;
+                ButtonStateHandler();
                 NotifyOfPropertyChange(() => RepeatPassword);
             }
         }

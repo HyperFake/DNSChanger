@@ -51,5 +51,23 @@ namespace DNS_changer.Helper
                 logger.Error(ex, "Failed to set new language");
             }
         }
+
+        /// <summary>
+        /// Gets current language short string
+        /// </summary>
+        /// <returns>Current language string</returns>
+        public static string GetLanguage()
+        {
+            string returnString = "";
+            try
+            {
+                returnString = Properties.Settings.Default.Language;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Failed to get current language");
+            }
+            return returnString;
+        }
     }
 }

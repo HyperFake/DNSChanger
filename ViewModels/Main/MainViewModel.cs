@@ -172,7 +172,6 @@ namespace DNS_changer.ViewModels.Main
         /// </summary>
         private async void CheckIfDNSChanged()
         {
-
             try
             {
                 string currentDNS = await GetCurrentDNSAsync();

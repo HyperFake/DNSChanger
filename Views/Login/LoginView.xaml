@@ -16,6 +16,8 @@
                 <Setter Property="Background" Value="#1a8cff"/>
                 <Setter Property="Foreground" Value="white"/>
                 <Setter Property="FontSize" Value="22"/>
+                <Setter Property="Height" Value="80"/>
+                <Setter Property="Width" Value="200"/>
                 <Setter Property="SnapsToDevicePixels" Value="True"/>
                 <Setter Property="Template">
                     <Setter.Value>
@@ -38,7 +40,11 @@
                 <Setter Property="BorderBrush" Value="#1a8cff"/>
                 <Setter Property="BorderThickness" Value="2"/>
                 <Setter Property="Background" Value="White"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
                 <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="Width" Value="220"/>
                 <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
                 <Setter Property="Template">
                     <Setter.Value>
@@ -53,6 +59,8 @@
             <Style TargetType="{x:Type TextBlock}" x:Key="Header">
                 <Setter Property="Foreground" Value="#333"/>
                 <Setter Property="FontSize" Value="24"/>
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Width" Value="300"/>
                 <Setter Property="SnapsToDevicePixels" Value="True"/>
             </Style>
         </ResourceDictionary>
@@ -85,11 +93,11 @@
 
             <!-- Main header -->
             <Border Grid.Column="2" Grid.Row="2">
-                <TextBlock x:Name="HeaderText" MinHeight="50" MaxHeight="100" MaxWidth="300" MinWidth="180" Style="{DynamicResource Header}" TextAlignment="Center"  TextWrapping="Wrap" Text="{util:Localization LoginRegisterHeader}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="HeaderText" Style="{DynamicResource Header}" TextAlignment="Center"  TextWrapping="Wrap" Text="{util:Localization LoginRegisterHeader}" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
             </Border>
 
             <!-- Password box -->
-            <PasswordBox x:Name="PasswordInput" Style="{DynamicResource LoginPasswordBox}" Grid.Column="2" Height="40" Width="220" Grid.Row="3" cal:Message.Attach="[Event PasswordChanged] = [Action OnPasswordChanged($source)]" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Foreground="{Binding Path=LoginPasswordTextColor, Mode=OneWay}" />
+            <PasswordBox x:Name="PasswordInput" Style="{DynamicResource LoginPasswordBox}" Grid.Column="2" Grid.Row="3" cal:Message.Attach="[Event PasswordChanged] = [Action OnPasswordChanged($source)]" Foreground="{Binding Path=LoginPasswordTextColor, Mode=OneWay}" />
 
             <!-- Error box -->
             <Border Height="30" Width="250" Grid.Column="2" Grid.Row="4">
@@ -97,7 +105,7 @@
             </Border>
 
             <!-- Login button -->
-            <Button x:Name="LoginButton" Content="{util:Localization LoginButton}" Style="{StaticResource LoginButton}" Height="80" Width="200" Grid.Column="2" Grid.Row="5"/>
+            <Button x:Name="LoginButton" Content="{util:Localization LoginButton}" Style="{StaticResource LoginButton}" Grid.Column="2" Grid.Row="5"/>
         </Grid>
     </ScrollViewer>
 </Window>

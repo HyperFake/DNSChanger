@@ -141,6 +141,12 @@
   <data name="BarTextWeak" xml:space="preserve">
     <value>Silpnas</value>
   </data>
+  <data name="ButtonStateOff" xml:space="preserve">
+    <value>Išjungta</value>
+  </data>
+  <data name="ButtonStateOn" xml:space="preserve">
+    <value>Įjungta</value>
+  </data>
   <data name="ChangeLanguage" xml:space="preserve">
     <value>Pakeisti kalbą</value>
   </data>
@@ -161,6 +167,9 @@
   </data>
   <data name="LanguageLithuanianButton" xml:space="preserve">
     <value>Lietuvių</value>
+  </data>
+  <data name="LanguageSelectionText" xml:space="preserve">
+    <value>Kalbos pasirinkimas</value>
   </data>
   <data name="LoginButton" xml:space="preserve">
     <value>Prisijunkti</value>
@@ -192,6 +201,9 @@
   <data name="OldPasswordText" xml:space="preserve">
     <value>Senas slaptažodis</value>
   </data>
+  <data name="PasswordTip" xml:space="preserve">
+    <value>Nepamirškite dažnai keisti savo slaptažodį, kad apsaugotumėte savo paskyrą.</value>
+  </data>
   <data name="RegisterButton" xml:space="preserve">
     <value>Registracija</value>
   </data>
@@ -212,5 +224,8 @@
   </data>
   <data name="WindowsButton" xml:space="preserve">
     <value>Windows paleidimas</value>
+  </data>
+  <data name="WindowsStartUpHeader" xml:space="preserve">
+    <value>Paleisti aplikaciją, kai leidžiasi windows</value>
   </data>
 </root>

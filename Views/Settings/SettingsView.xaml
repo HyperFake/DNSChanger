@@ -5,36 +5,78 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:util="clr-namespace:DNS_changer.Helper"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="White">
+             d:DesignHeight="600" d:DesignWidth="900" Background="White">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <!-- Settings menu button style -->
+            <Style TargetType="Button" x:Key="SettingsMenuButton">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="#d9e6f2"/>
+                <Setter Property="Foreground" Value="#404040"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="Margin" Value="10 0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                    <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="#1a1a1a"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Foreground" Value="#1a1a1a"/>
+                                    <Setter Property="Background" Value="#c6d9eb"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <!-- Definitions -->
         <Grid.ColumnDefinitions>
             <!-- Buttons -->
-            <ColumnDefinition Width="15*"/>
-
+            <ColumnDefinition Width="auto"/>
+            
+            <!-- Border-->
+            <ColumnDefinition Width="2"/>
+            
             <!-- Gap-->
             <ColumnDefinition Width="40"/>
 
             <!-- Content -->
-            <ColumnDefinition Width="90*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
 
             <!-- General button -->
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="auto"/>
 
             <!-- Settings button -->
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="80*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!-- Border -->
+        <Rectangle Grid.Row="1" SnapsToDevicePixels="True" Grid.Column="1" Grid.RowSpan="5" Fill="#1a8cff"/>
+        
         <!-- Menu buttons -->
-        <Button x:Name="GeneralSettings" Content="{util:Localization SettingsGeneralButton}" Grid.Column="0" Grid.Row="1"/>
-        <Button x:Name="PasswordSettings" Content="{util:Localization SettingsPasswordButton}" Grid.Column="0" Grid.Row="2" />
+        <Button x:Name="GeneralSettings" Style="{DynamicResource SettingsMenuButton}" Content="{util:Localization SettingsGeneralButton}" Grid.Column="0" Grid.Row="1"/>
+        <Button x:Name="PasswordSettings" Style="{DynamicResource SettingsMenuButton}" Content="{util:Localization SettingsPasswordButton}" Grid.Column="0" Grid.Row="2" />
 
         <!-- Content -->
-        <ContentControl x:Name="ActiveItem" Content="ContentControl" Grid.Column="2" Grid.Row="1" Grid.RowSpan="3"/>
+        <ContentControl x:Name="ActiveItem" SnapsToDevicePixels="True" Content="ContentControl" Grid.Column="3" Grid.Row="1" Grid.RowSpan="3"/>
     </Grid>
 </UserControl>

@@ -38,13 +38,13 @@ namespace DNS_changer
         private void SetDefaultLanguage()
         {
 
-            if (string.IsNullOrWhiteSpace(Properties.Settings.Default.Language))
+            if (string.IsNullOrWhiteSpace(LanguageHelper.GetLanguage()))
             {
                 LanguageHelper.SetLanguage("en-US");
                 return;
             }
 
-            LanguageHelper.SetLanguage(Properties.Settings.Default.Language);
+            LanguageHelper.SetLanguage(LanguageHelper.GetLanguage());
         }
 
         /// <summary>
