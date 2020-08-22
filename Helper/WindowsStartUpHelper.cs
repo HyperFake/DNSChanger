@@ -9,29 +9,56 @@ namespace DNS_changer.Helper
         // The path to the key where Windows looks for startup applications
         private static readonly RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
+        // Logging
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Checks registry for DNSChanger value to see if it's enabled
         /// </summary>
         public static bool CheckRegistryState()
         {
-            // Check to see the current state (running at startup or not)
-            return rkApp.GetValue("DNSChanger") != null;
+            bool regState = false;
+            try
+            {
+                regState = rkApp.GetValue("DNSChanger") != null;
+            }
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Failed to check registry for DNS changer");
+            }
+
+            return regState;
         }
 
         /// <summary>
-        /// Adds DNSChanger program to windows program start up
+        /// Adds DNSChanger to start up registry list
         /// </summary>
 
         public static void AddStartUpToRegistry()
         {
-            rkApp.SetValue("DNSChanger", Application.ExecutablePath);
-
+            try
+            {
+                rkApp.SetValue("DNSChanger", Application.ExecutablePath);
+            }
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Failed to add DNS changer to registry");
+            }
         }
 
+        /// <summary>
+        /// Removes DNS changer from start up registry list
+        /// </summary>
         public static void RemoveStartUpFromRegistry()
         {
-            rkApp.DeleteValue("DNSChanger", false);
+            try
+            {
+                rkApp.DeleteValue("DNSChanger", false);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Failed to delete DNS changer from registry");
+            }
         }
     }
 }

@@ -45,6 +45,16 @@ namespace DNS_changer.Helper
 
             return HashPassword(newPassword).Equals(Properties.Settings.Default.Password);
         }
+
+        /// <summary>
+        /// Sets new password
+        /// </summary>
+        /// <param name="password">password string</param>
+        public static void SetPassword(string password)
+        {
+            Properties.Settings.Default.Password = password;
+            Properties.Settings.Default.Save();
+        }
     }
 
 }

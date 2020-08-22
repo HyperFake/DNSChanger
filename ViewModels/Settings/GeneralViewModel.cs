@@ -36,18 +36,20 @@ namespace DNS_changer.ViewModels.Settings
             try
             {
                 ToolStripMenuItem languageStripMenu = new ToolStripMenuItem();
+                // Language buttons
                 languageStripMenu.DropDownItems.Add(LanguageHelper.SavedValue("LanguageEnglishButton"), null, AddEnglishSystemTray);
                 languageStripMenu.DropDownItems.Add(LanguageHelper.SavedValue("LanguageLithuanianButton"), null, AddLithuanianSystemTray);
 
+                // Main button text
                 languageStripMenu.Text = LanguageHelper.SavedValue("ChangeLanguage");
 
+                // Add to system tray
                 TrayManager.NotifyIcon.ContextMenuStrip.Items.Add(languageStripMenu);
             }
             catch (Exception ex)
             {
                 logger.Error(ex, "Failed to add language button to system tray.");
             }
-
         }
 
         /// <summary>
@@ -86,14 +88,13 @@ namespace DNS_changer.ViewModels.Settings
                 else
                     WindowsStartUp.Checked = false;
 
-                // Adding it
+                // Add to system tray
                 TrayManager.NotifyIcon.ContextMenuStrip.Items.Add(WindowsStartUp);
             }
             catch (Exception ex)
             {
                 logger.Error(ex, "Failed to add windows start up toggle to system tray");
             }
-
         }
 
 
@@ -123,7 +124,6 @@ namespace DNS_changer.ViewModels.Settings
             {
                 logger.Error(ex, "Failed to toggle windows start up");
             }
-
         }
 
         /// <summary>
@@ -136,17 +136,25 @@ namespace DNS_changer.ViewModels.Settings
             ToggleStartUp();
         }
 
+        /// <summary>
+        /// Creates languge list for combobox in settings menu
+        /// </summary>
         private void CreateLanguageListOnStart()
         {
+            // New list with languages
             BindableCollection<string> newList = new BindableCollection<string>();
             newList.Add(LanguageStrings.LongEnglishUS);
             newList.Add(LanguageStrings.LongLithuania);
 
             LanguageList = newList;
 
-            SetCurrentLanguage();
+            // Set current combobox active item
+            SetCurrentItem();
         }
 
+        /// <summary>
+        /// On combobox language selection changed, change the app language
+        /// </summary>
         public void OnSelectionChanged()
         {
             if (SelectedLanguageList == LanguageStrings.LongEnglishUS)
@@ -160,10 +168,14 @@ namespace DNS_changer.ViewModels.Settings
                 SelectedLanguageList = LanguageStrings.LongLithuania;
             }
 
+            // Update some UI elements from code
             UpdatePageLanguage();
         }
 
-        private void SetCurrentLanguage()
+        /// <summary>
+        /// Sets active combobox item
+        /// </summary>
+        private void SetCurrentItem()
         {
             string currentLanguage = LanguageHelper.GetLanguage();
 
@@ -174,23 +186,25 @@ namespace DNS_changer.ViewModels.Settings
         }
 
 
+        /// <summary>
+        /// Updates settings page language
+        /// </summary>
         private void UpdatePageLanguage()
         {
-            if(StartUpEnabled)
-            {
+            if (StartUpEnabled)
                 WindowsButtonText = LanguageHelper.SavedValue("ButtonStateOn");
-
-            }
             else
-            {
                 WindowsButtonText = LanguageHelper.SavedValue("ButtonStateOff");
-
-            }
         }
+
+        /// <summary>
+        /// Sets button look depending if it's enabled or not
+        /// </summary>
         private void SetButtonLook()
         {
             BrushConverter brushCV = new BrushConverter();
-            if(StartUpEnabled)
+
+            if (StartUpEnabled)
             {
                 WindowsButtonText = LanguageHelper.SavedValue("ButtonStateOn");
                 WindowsButtonColor = (Brush)brushCV.ConvertFromString("#1a8cff"); // blue
@@ -200,7 +214,6 @@ namespace DNS_changer.ViewModels.Settings
             else
             {
                 WindowsButtonText = LanguageHelper.SavedValue("ButtonStateOff");
-                WindowsButtonColor = Brushes.Red;
                 WindowsButtonColor = (Brush)brushCV.ConvertFromString("#808080"); // grey
                 WindowButtonColorHover = (Brush)brushCV.ConvertFromString("#666666"); // +10% strength grey
                 WindowButtonColorPressed = (Brush)brushCV.ConvertFromString("#4d4d4d"); // +20% strength grey

@@ -78,7 +78,7 @@ namespace DNS_changer.ViewModels.Shell
         }
 
         /// <summary>
-        /// Overrides OnClose to just hide
+        /// Overrides OnClose to just hide the window
         /// </summary>
         /// <param name="e">CancelEventArgs</param>
         public void OnClose(CancelEventArgs e)

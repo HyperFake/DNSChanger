@@ -39,7 +39,6 @@ namespace DNS_changer.ViewModels.Login
             {
                 logger.Error(ex, "Login function failed");
             }
-
         }
 
         /// <summary>
@@ -80,6 +79,10 @@ namespace DNS_changer.ViewModels.Login
             return tempResult;
         }
 
+        /// <summary>
+        /// Captures enter key and presses login button
+        /// </summary>
+        /// <param name="e">KeyEventArgs</param>
         public void EnterButtonLogin(KeyEventArgs e)
         {
             if (e.Key == Key.Enter)

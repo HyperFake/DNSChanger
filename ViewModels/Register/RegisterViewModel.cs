@@ -64,8 +64,7 @@ namespace DNS_changer.ViewModels.Register
                         string hashedPassword = PasswordHelper.HashPassword(PasswordInput);
 
                         // Set the password
-                        Properties.Settings.Default.Password = hashedPassword;
-                        Properties.Settings.Default.Save();
+                        PasswordHelper.SetPassword(hashedPassword);
                     }
                 }
                 catch (Exception ex)

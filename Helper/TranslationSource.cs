@@ -9,6 +9,9 @@ namespace DNS_changer.Helper
     {
         private static readonly TranslationSource instance = new TranslationSource();
 
+        /// <summary>
+        /// Returns translationSource instance
+        /// </summary>
         public static TranslationSource Instance
         {
             get { return instance; }
@@ -22,6 +25,9 @@ namespace DNS_changer.Helper
             get { return manager.GetString(key, currentCulture); }
         }
 
+        /// <summary>
+        /// Get or set current culture, if set invoke propertychanged
+        /// </summary>
         public CultureInfo CurrentCulture
         {
             get { return currentCulture; }

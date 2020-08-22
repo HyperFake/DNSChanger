@@ -8,20 +8,25 @@ namespace DNS_changer.Helper
         // Logging
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
+        /// <summary>
+        /// Returns saved value by current active language
+        /// </summary>
+        /// <param name="valueName"></param>
+        /// <returns></returns>
         public static string SavedValue(string valueName)
         {
-            if (valueName is null) SetLanguage("en-US");
+            if (valueName is null) SetLanguage(LanguageStrings.ShortEnglishUS);
 
             try
             {
-                if (Properties.Settings.Default.Language == "lt-LT")
+                if (Properties.Settings.Default.Language == LanguageStrings.ShortLithuania)
                 {
-                    TranslationSource.Instance.CurrentCulture = new CultureInfo("lt-LT");
+                    TranslationSource.Instance.CurrentCulture = new CultureInfo(LanguageStrings.ShortLithuania);
                     return Properties.Resources.ResourceManager.GetString(valueName, TranslationSource.Instance.CurrentCulture);
                 }
-                else if (Properties.Settings.Default.Language == "en-US")
+                else if (Properties.Settings.Default.Language == LanguageStrings.ShortEnglishUS)
                 {
-                    TranslationSource.Instance.CurrentCulture = new CultureInfo("en-US");
+                    TranslationSource.Instance.CurrentCulture = new CultureInfo(LanguageStrings.ShortEnglishUS);
                     return Properties.Resources.ResourceManager.GetString(valueName, TranslationSource.Instance.CurrentCulture);
                 }
             }

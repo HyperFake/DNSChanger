@@ -49,6 +49,5 @@ namespace DNS_changer.ViewModels.Settings
         {
             ActivateItem(passwordView);
         }
-
     }
 }

@@ -9,6 +9,7 @@
              Background="White">
     <UserControl.Resources>
         <ResourceDictionary>
+            <!-- DNS changing button style -->
             <Style TargetType="Button" x:Key="MainButtons">
                 <Setter Property="FontSize" Value="20"/>
                 <Setter Property="Width" Value="180"/>
@@ -35,6 +36,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <!-- Reset button style -->
             <Style TargetType="Button" x:Key="ResetButton">
                 <Setter Property="Background" Value="#ff0000"/>
                 <Setter Property="Foreground" Value="White"/>
@@ -60,8 +62,8 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-
             </Style>
+            <!-- DNS changed or not text style -->
             <Style x:Key="MainTextBlock" TargetType="TextBlock">
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -76,7 +78,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
-                <!-- First button -->
+                <!-- First buttons -->
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <!-- Gap -->

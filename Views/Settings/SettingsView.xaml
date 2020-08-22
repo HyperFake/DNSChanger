@@ -39,7 +39,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            
+
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -47,10 +47,10 @@
         <Grid.ColumnDefinitions>
             <!-- Buttons -->
             <ColumnDefinition Width="auto"/>
-            
+
             <!-- Border-->
             <ColumnDefinition Width="2"/>
-            
+
             <!-- Gap-->
             <ColumnDefinition Width="40"/>
 
@@ -71,7 +71,7 @@
 
         <!-- Border -->
         <Rectangle Grid.Row="1" SnapsToDevicePixels="True" Grid.Column="1" Grid.RowSpan="5" Fill="#1a8cff"/>
-        
+
         <!-- Menu buttons -->
         <Button x:Name="GeneralSettings" Style="{DynamicResource SettingsMenuButton}" Content="{util:Localization SettingsGeneralButton}" Grid.Column="0" Grid.Row="1"/>
         <Button x:Name="PasswordSettings" Style="{DynamicResource SettingsMenuButton}" Content="{util:Localization SettingsPasswordButton}" Grid.Column="0" Grid.Row="2" />

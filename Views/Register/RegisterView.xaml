@@ -13,6 +13,7 @@
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary>
+            <!-- Register button style -->
             <Style TargetType="{x:Type Button}" x:Key="RegisterButton">
                 <Setter Property="Background" Value="#1a8cff"/>
                 <Setter Property="Foreground" Value="white"/>
@@ -35,6 +36,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <!-- Password box style -->
             <Style TargetType="{x:Type PasswordBox}" x:Key="RegisterPasswordBox">
                 <Setter Property="BorderBrush" Value="#1a8cff"/>
                 <Setter Property="BorderThickness" Value="2"/>
@@ -51,6 +53,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <!-- Header text style -->
             <Style TargetType="{x:Type TextBlock}" x:Key="Header">
                 <Setter Property="Foreground" Value="#333"/>
                 <Setter Property="FontSize" Value="24"/>
@@ -59,9 +62,8 @@
         </ResourceDictionary>
     </Window.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-        
-        <Grid>
 
+        <Grid>
             <!-- Definitions -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
@@ -71,6 +73,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="20"/>
             </Grid.ColumnDefinitions>
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="*"/>

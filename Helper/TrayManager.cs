@@ -12,6 +12,9 @@ namespace DNS_changer.Helper
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        // Logging
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         private void NotifyPropertyChanged(string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -26,6 +29,12 @@ namespace DNS_changer.Helper
             };
         }
 
+        /// <summary>
+        /// Add item to system tray menu
+        /// </summary>
+        /// <param name="name">Name of the item</param>
+        /// <param name="Image">Image of the item</param>
+        /// <param name="Event">Event of the item</param>
         public void AddItemToContextStripMenu(string name, Image Image = null, EventHandler Event = null)
         {
             if (NotifyIcon.ContextMenuStrip == null)
@@ -36,46 +45,48 @@ namespace DNS_changer.Helper
                     // Make items checked status visible
                     ShowCheckMargin = true
                 };
-
                 NotifyIcon.ContextMenuStrip = newMenu;
             }
 
             NotifyIcon.ContextMenuStrip.Items.Add(name, Image, Event);
         }
 
-        public void SetToolTipText(string text)
-        {
-            _notifyIcon.Text = text;
-        }
-
         protected virtual void Dispose(bool disposing)
         {
+
             _notifyIcon.Visible = false;
+
         }
 
-        protected virtual void HideIcon()
-        {
-            _notifyIcon.Visible = false;
-        }
-
-        protected virtual void ShowIcon()
-        {
-            _notifyIcon.Visible = true;
-        }
-
-        public ContextMenuStrip GetCurrentContextMenuStrip()
-        {
-            return NotifyIcon.ContextMenuStrip;
-        }
-
+        /// <summary>
+        /// Changes NotifyIcon image to appear active
+        /// </summary>
         public void ActivateTray()
         {
-            NotifyIcon.Icon = Properties.Resources.systemTrayOn;
+            try
+            {
+                NotifyIcon.Icon = Properties.Resources.systemTrayOn;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Failed to activate system tray");
+            }
         }
 
+
+        /// <summary>
+        /// Changes NotifyIcon image to appear not active
+        /// </summary>
         public void DeactivateTray()
         {
-            NotifyIcon.Icon = Properties.Resources.systemTrayOff;
+            try
+            {
+                NotifyIcon.Icon = Properties.Resources.systemTrayOff;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Failed to deactivate system tray");
+            }
         }
 
         public void Dispose()

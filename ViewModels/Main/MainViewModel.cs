@@ -90,7 +90,6 @@ namespace DNS_changer.ViewModels.Main
                     logger.Error(ex, "Failed to set DNS");
                 }
             });
-
         }
 
         /// <summary>
@@ -129,7 +128,6 @@ namespace DNS_changer.ViewModels.Main
                     logger.Error(ex, "Failed to reset DNS");
                 }
             });
-
         }
 
         /// <summary>
@@ -147,14 +145,6 @@ namespace DNS_changer.ViewModels.Main
 
                     IPInterfaceProperties IPProperties = CurrentInterface.GetIPProperties();
                     IPAddressCollection IPCollection = IPProperties.DnsAddresses;
-
-                    StringBuilder DNSstring = new StringBuilder();
-                    foreach (IPAddress info in IPCollection)
-                    {
-                        DNSstring.Append($"{info } ");
-                    }
-                    CurrentDNS = DNSstring.ToString();
-
 
                     returnString = IPCollection[0].ToString();
                 }
@@ -263,7 +253,7 @@ namespace DNS_changer.ViewModels.Main
             set
             {
                 _suggestionColor = value;
-                NotifyOfPropertyChange(()=> SuggestionColor);
+                NotifyOfPropertyChange(() => SuggestionColor);
             }
         }
     }

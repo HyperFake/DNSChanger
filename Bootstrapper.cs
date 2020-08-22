@@ -128,8 +128,6 @@ namespace DNS_changer
             {
                 logger.Error(ex, "Failed to close Register window");
             }
-
         }
-
     }
 }

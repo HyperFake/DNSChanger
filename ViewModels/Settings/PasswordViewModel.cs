@@ -30,9 +30,11 @@ namespace DNS_changer.ViewModels.Settings
             {
                 logger.Error(ex, "Failed to change the password");
             }
-
         }
 
+        /// <summary>
+        /// Enables button only if new password and repeat password is longer than 3 and shorter than 18 symbols
+        /// </summary>
         private void ButtonStateHandler()
         {
             if (!string.IsNullOrWhiteSpace(NewPassword) && NewPassword.Length > 3 && NewPassword.Length < 18 &&
@@ -208,7 +210,7 @@ namespace DNS_changer.ViewModels.Settings
             get { return _oldPassword; }
             set
             {
-                
+
                 _oldPassword = value;
                 NotifyOfPropertyChange(() => OldPassword);
             }
