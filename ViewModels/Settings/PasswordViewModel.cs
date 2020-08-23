@@ -3,6 +3,7 @@ using DNS_changer.Helper;
 using System;
 using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace DNS_changer.ViewModels.Settings
@@ -22,8 +23,12 @@ namespace DNS_changer.ViewModels.Settings
                 // Check if password meets the requirements and isn't used as current password
                 if (ParsePasswordInput(NewPassword) && PasswordsComparing())
                 {
-                    Properties.Settings.Default.Password = PasswordHelper.HashPassword(NewPassword);
-                    Properties.Settings.Default.Save();
+                    PasswordHelper.SetPassword(PasswordHelper.HashPassword(NewPassword));
+                    NewPassword = null;
+                    OldPassword = null;
+                    RepeatPassword = null;
+                    ErrorTextColor = Brushes.Green;
+                    ErrorText = "Your password has been changed successfully!";
                 }
             }
             catch (Exception ex)
@@ -44,6 +49,19 @@ namespace DNS_changer.ViewModels.Settings
                 ButtonEnabled = false;
         }
 
+
+        /// <summary>
+        /// Catches enter button and presses change password button
+        /// </summary>
+        /// <param name="e">KeyEventArgs</param>
+        public void EnterButtonChangePassword(KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                ChangePassword();
+            }
+        }
+
         /// <summary>
         /// Parses password input and represents it's strength accordingly
         /// </summary>
@@ -53,6 +71,7 @@ namespace DNS_changer.ViewModels.Settings
         {
             try
             {
+                ErrorTextColor = Brushes.Red;
                 // If empty set default look
                 if (string.IsNullOrWhiteSpace(password))
                 {
@@ -305,6 +324,17 @@ namespace DNS_changer.ViewModels.Settings
             {
                 _errorText = value;
                 NotifyOfPropertyChange(() => ErrorText);
+            }
+        }
+
+        private Brush _errorTextColor;
+        public Brush ErrorTextColor
+        {
+            get { return _errorTextColor; }
+            set
+            {
+                _errorTextColor = value;
+                NotifyOfPropertyChange(() => ErrorTextColor);
             }
         }
     }

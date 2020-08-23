@@ -1,7 +1,6 @@
 ﻿using Caliburn.Micro;
 using DNS_changer.Helper;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -62,6 +61,7 @@ namespace DNS_changer.ViewModels.Login
                     if (PasswordHelper.ComparePasswordToStored(PasswordInput))
                     {
                         tempResult = true;
+                        PasswordInput = null;
                     }
                     else
                     {
@@ -75,7 +75,6 @@ namespace DNS_changer.ViewModels.Login
                     tempResult = false;
                 }
             });
-
             return tempResult;
         }
 

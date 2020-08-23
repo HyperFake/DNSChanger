@@ -65,6 +65,7 @@ namespace DNS_changer.ViewModels.Register
 
                         // Set the password
                         PasswordHelper.SetPassword(hashedPassword);
+                        PasswordInput = null;
                     }
                 }
                 catch (Exception ex)
@@ -146,7 +147,6 @@ namespace DNS_changer.ViewModels.Register
             {
                 logger.Error(ex, "Failed to parse password input");
             }
-
             return false;
         }
 
